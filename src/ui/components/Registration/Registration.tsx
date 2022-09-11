@@ -51,8 +51,8 @@ const Registration: FC = () => {
               control={control}
               defaultValue=""
               rules={{
-                required: true,
-                minLength: { message: 'Password is to short', value: 4 },
+                required: { message: 'Password is required', value: true },
+                minLength: { message: 'Password should be more then 4 char', value: 4 },
               }}
             />
             <Controller
@@ -83,7 +83,9 @@ const Registration: FC = () => {
           </div>
         </StyledForm>
       </form>
-      {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+      {errors.email && <span>{errors.email?.message}</span>}
+      {errors.password && <span>{errors.password?.message}</span>}
+      {errors.confirmPassword && <span>{errors.confirmPassword?.message}</span>}
     </>
   );
 };

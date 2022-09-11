@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initState = {};
 
 const appSlice = createSlice({
-  name: 'app',
+  name: 'auth',
   initialState: initState,
   reducers: {},
 });
 
-export const appReducer = appSlice.reducer;
+export const authReducer = appSlice.reducer;
