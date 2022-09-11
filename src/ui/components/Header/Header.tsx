@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { PATH } from '../../Routs/Routs';
 import styled from 'styled-components';
+import { LOGIN, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -18,9 +18,9 @@ const StyledNavLink = styled(NavLink)`
 const Header = () => {
   return (
     <StyledHeader>
-      <StyledNavLink to={PATH.PROFILE}>Profile</StyledNavLink>
-      <StyledNavLink to={PATH.LOGIN}>Login</StyledNavLink>
-      <StyledNavLink to={PATH.REGISTRATION}>Registration</StyledNavLink>
+      <StyledNavLink to={PROFILE}>Profile</StyledNavLink>
+      <StyledNavLink to={LOGIN}>Login</StyledNavLink>
+      <StyledNavLink to={REGISTRATION}>Registration</StyledNavLink>
     </StyledHeader>
   );
 };
