@@ -1,17 +1,21 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Input, Space } from 'antd';
+import { Input, notification, Space } from 'antd';
 import { LOGIN } from '../../../utils/RoutesPathConstants';
+import { useSignUpMutation } from '../../../dal/auth/authAPI';
 
 type RegistrationTypes = {
   email: string;
+  name: string;
   password: string;
   confirmPassword: string;
 };
+
+type NotificationType = 'success' | 'error';
 
 const StyledForm = styled.div`
   display: flex;
@@ -21,18 +25,49 @@ const StyledForm = styled.div`
 `;
 
 const Registration: FC = () => {
+  const [signUp, { data, error, isLoading, isSuccess, isError }] = useSignUpMutation();
+
+  const openNotificationWithIcon = (type: NotificationType, error?: any) => {
+    notification[type]({
+      message: `${type === 'success' ? 'Success' : 'Error'}`,
+      description: `${type === 'success' ? '' : error.data.message}`,
+    });
+  };
+
+  useEffect(() => {
+    if (isError) {
+      openNotificationWithIcon('error', error);
+    }
+    if (isSuccess) {
+      openNotificationWithIcon('success');
+    }
+  }, [isError, isSuccess]);
+
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<RegistrationTypes>();
-  const onSubmit = (data: RegistrationTypes) => console.log(data);
+  const onSubmit = (data: RegistrationTypes) => {
+    const { name, email, password } = data;
+    signUp({ name, email, password });
+  };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <StyledForm>
+          <Controller
+            render={({ field }) => <Input {...field} type="text" placeholder="Name" />}
+            name="name"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: { message: 'Name is required', value: true },
+            }}
+          />
+
           <Controller
             render={({ field }) => <Input {...field} type="email" placeholder="Email" />}
             name="email"

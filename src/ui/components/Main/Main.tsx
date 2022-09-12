@@ -1,7 +1,7 @@
 import React from 'react';
-import Routs from '../../Routs/Routs';
 import Header from '../Header/Header';
 import { HashRouter } from 'react-router-dom';
+import Routs from '../../Routs/Routs';
 
 const Main = () => {
   return (
