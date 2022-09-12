@@ -11,7 +11,6 @@ const Routs = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate replace to={MAIN} />} />
-      {/*<Route path={MAIN} element={<Main />} />*/}
       <Route path={LOGIN} element={<Login />} />
       <Route path={PROFILE} element={<Profile />} />
       <Route path={REGISTRATION} element={<Registration />} />

@@ -1,14 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AUTH, REGISTER } from '../../utils/constants/endpointConstants';
+import { AUTH, LOGIN, REGISTER } from '../../utils/constants/endpointConstants';
 
 interface ISignUpRes {
+  id: number;
   name: string;
   email: string;
-  id: number;
 }
 
 interface ISignUpReq {
   name: string;
+  email: string;
+  password: string;
+}
+
+interface ISignInRes {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface ISignInReq {
   email: string;
   password: string;
 }
@@ -25,7 +36,14 @@ export const authApi = createApi({
       }),
       transformResponse: (baseQueryReturnValue: ISignUpRes) => baseQueryReturnValue,
     }),
+    signIn: build.mutation<ISignInRes, ISignInReq>({
+      query: (body) => ({
+        url: `/${AUTH}/${LOGIN}`,
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useSignUpMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation } = authApi;

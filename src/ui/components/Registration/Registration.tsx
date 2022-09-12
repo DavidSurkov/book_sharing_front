@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/regExp';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Input, notification, Space } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
+import { Button, Input, notification, Space } from 'antd';
 import { LOGIN } from '../../../utils/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
 
@@ -17,17 +17,36 @@ type RegistrationTypes = {
 
 type NotificationType = 'success' | 'error';
 
-const StyledForm = styled.div`
+const StyledRegisterForm = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin: 200px auto;
+  border: 1px solid gray;
+  border-radius: 2px;
+  width: 250px;
+  height: 300px;
+`;
+
+const StyledInput = styled(Input)`
+  max-width: 200px;
+  margin-bottom: 8px;
+`;
+
+const StyledButton = styled(Button)`
+  width: 200px;
+  margin: 8px 0;
+`;
+
+const StyledInputPassword = styled(Input.Password)`
+  width: 200px;
 `;
 
 const Registration: FC = () => {
   const [signUp, { data, error, isLoading, isSuccess, isError }] = useSignUpMutation();
 
-  const openNotificationWithIcon = (type: NotificationType, error?: any) => {
+  const openRegisterNotification = (type: NotificationType, error?: any) => {
     notification[type]({
       message: `${type === 'success' ? 'Success' : 'Error'}`,
       description: `${type === 'success' ? '' : error.data.message}`,
@@ -36,10 +55,10 @@ const Registration: FC = () => {
 
   useEffect(() => {
     if (isError) {
-      openNotificationWithIcon('error', error);
+      openRegisterNotification('error', error);
     }
     if (isSuccess) {
-      openNotificationWithIcon('success');
+      openRegisterNotification('success');
     }
   }, [isError, isSuccess]);
 
@@ -57,9 +76,15 @@ const Registration: FC = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledForm>
+        <StyledRegisterForm>
           <Controller
-            render={({ field }) => <Input {...field} type="text" placeholder="Name" />}
+            render={({ field }) => (
+              <StyledInput
+                {...field}
+                placeholder="User name"
+                prefix={<UserOutlined className="site-form-item-icon" />}
+              />
+            )}
             name="name"
             control={control}
             defaultValue=""
@@ -69,7 +94,7 @@ const Registration: FC = () => {
           />
 
           <Controller
-            render={({ field }) => <Input {...field} type="email" placeholder="Email" />}
+            render={({ field }) => <StyledInput {...field} type="email" placeholder="Email" />}
             name="email"
             control={control}
             defaultValue=""
@@ -81,7 +106,7 @@ const Registration: FC = () => {
 
           <Space direction="vertical">
             <Controller
-              render={({ field }) => <Input.Password {...field} placeholder="Password" />}
+              render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
               name="password"
               control={control}
               defaultValue=""
@@ -92,7 +117,7 @@ const Registration: FC = () => {
             />
             <Controller
               render={({ field }) => (
-                <Input.Password
+                <StyledInputPassword
                   {...field}
                   placeholder="Confirm password"
                   iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
@@ -111,12 +136,13 @@ const Registration: FC = () => {
             />
           </Space>
 
+          {/*<StyledButton>Sign up</StyledButton>*/}
           <input type="submit" />
           <div>
             <span>Already have an account?</span>
             <NavLink to={LOGIN}>Login</NavLink>
           </div>
-        </StyledForm>
+        </StyledRegisterForm>
       </form>
       {errors.email && <span>{errors.email?.message}</span>}
       {errors.password && <span>{errors.password?.message}</span>}
