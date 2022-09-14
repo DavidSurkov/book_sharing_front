@@ -1,12 +1,13 @@
 import { FC, useEffect } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
-import { Button, Input, notification, Space } from 'antd';
+import { Button, Form, Input, notification, Space } from 'antd';
 import { LOGIN } from '../../../utils/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
+import Preloader from '../Preloader/Preloader';
+import { NavLink } from 'react-router-dom';
 
 type RegistrationTypes = {
   email: string;
@@ -37,10 +38,15 @@ const StyledInput = styled(Input)`
 const StyledButton = styled(Button)`
   width: 200px;
   margin: 8px 0;
+  color: gray;
 `;
 
 const StyledInputPassword = styled(Input.Password)`
   width: 200px;
+`;
+
+const StyledUserOutlined = styled(UserOutlined)`
+  color: gray;
 `;
 
 const Registration: FC = () => {
@@ -75,75 +81,73 @@ const Registration: FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledRegisterForm>
-          <Controller
-            render={({ field }) => (
-              <StyledInput
-                {...field}
-                placeholder="User name"
-                prefix={<UserOutlined className="site-form-item-icon" />}
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <StyledRegisterForm>
+            <Controller
+              render={({ field }) => <StyledInput {...field} placeholder="User name" prefix={<StyledUserOutlined />} />}
+              name="name"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { message: 'Name is required', value: true },
+              }}
+            />
+
+            <Controller
+              render={({ field }) => <StyledInput {...field} type="email" placeholder="Email" />}
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { message: 'Email is required', value: true },
+                pattern: { message: 'Email is not correct', value: emailRegExp },
+              }}
+            />
+
+            <Space direction="vertical">
+              <Controller
+                render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
+                name="password"
+                control={control}
+                defaultValue=""
+                rules={{
+                  required: { message: 'Password is required', value: true },
+                  minLength: { message: 'Password should be more then 4 char', value: 4 },
+                }}
               />
-            )}
-            name="name"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: 'Name is required', value: true },
-            }}
-          />
-
-          <Controller
-            render={({ field }) => <StyledInput {...field} type="email" placeholder="Email" />}
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: 'Email is required', value: true },
-              pattern: { message: 'Email is not correct', value: emailRegExp },
-            }}
-          />
-
-          <Space direction="vertical">
-            <Controller
-              render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: { message: 'Password is required', value: true },
-                minLength: { message: 'Password should be more then 4 char', value: 4 },
-              }}
-            />
-            <Controller
-              render={({ field }) => (
-                <StyledInputPassword
-                  {...field}
-                  placeholder="Confirm password"
-                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              )}
-              name="confirmPassword"
-              control={control}
-              defaultValue=""
-              rules={{
-                validate: (value: string) => {
-                  if (watch('password') !== value) {
-                    return 'Password do not much';
-                  }
-                },
-              }}
-            />
-          </Space>
-
-          {/*<StyledButton>Sign up</StyledButton>*/}
-          <input type="submit" />
-          <div>
-            <span>Already have an account?</span>
-            <NavLink to={LOGIN}>Login</NavLink>
-          </div>
-        </StyledRegisterForm>
-      </form>
+              <Controller
+                render={({ field }) => (
+                  <StyledInputPassword
+                    {...field}
+                    placeholder="Confirm password"
+                    iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                  />
+                )}
+                name="confirmPassword"
+                control={control}
+                defaultValue=""
+                rules={{
+                  validate: (value: string) => {
+                    if (watch('password') !== value) {
+                      return 'Password do not much';
+                    }
+                  },
+                }}
+              />
+            </Space>
+            <Form.Item>
+              <StyledButton htmlType="submit">Sign up</StyledButton>
+            </Form.Item>
+            <div>
+              <span>Already have an account?</span>
+              <NavLink to={LOGIN}>Login</NavLink>
+            </div>
+          </StyledRegisterForm>
+        </form>
+      )}
       {errors.email && <span>{errors.email?.message}</span>}
       {errors.password && <span>{errors.password?.message}</span>}
       {errors.confirmPassword && <span>{errors.confirmPassword?.message}</span>}

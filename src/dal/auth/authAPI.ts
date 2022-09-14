@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AUTH, LOGIN, REGISTER } from '../../utils/constants/endpointConstants';
+import { AUTH, LOGIN, LOGOUT, REGISTER } from '../../utils/constants/endpointConstants';
 
 interface ISignUpRes {
   id: number;
@@ -43,7 +43,19 @@ export const authApi = createApi({
         body,
       }),
     }),
+    signOut: build.mutation<void, void>({
+      query: () => ({
+        url: `/${AUTH}/${LOGOUT}`,
+        method: 'POST',
+      }),
+    }),
+    authorise: build.query<void, void>({
+      query: () => ({
+        url: `/${AUTH}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation } = authApi;
+export const { useSignUpMutation, useSignInMutation, useSignOutMutation, useAuthoriseQuery } = authApi;

@@ -1,11 +1,12 @@
 import { FC, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { FORGOT_PASSWORD, REGISTRATION } from '../../../utils/RoutesPathConstants';
+import { FORGOT_PASSWORD, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Checkbox, Input, notification } from 'antd';
+import { Button, Checkbox, Form, Input, notification } from 'antd';
 import { emailRegExp } from '../../../utils/regExp';
 import { useSignInMutation } from '../../../dal/auth/authAPI';
+import Preloader from '../Preloader/Preloader';
 
 type LoginFormTypes = {
   email: string;
@@ -39,10 +40,12 @@ const StyledInputPassword = styled(Input.Password)`
 const StyledButton = styled(Button)`
   width: 200px;
   margin: 8px 0;
+  color: gray;
 `;
 
 const StyledCheckbox = styled(Checkbox)`
   margin-top: 8px;
+  color: gray;
 `;
 
 const StyledLinksWrapper = styled.div`
@@ -52,6 +55,7 @@ const StyledLinksWrapper = styled.div`
 `;
 
 const Login: FC = () => {
+  const navigate = useNavigate();
   const [signIn, { data, error, isLoading, isSuccess, isError }] = useSignInMutation();
 
   const openLoginNotification = (type: NotificationType, error?: any) => {
@@ -67,6 +71,7 @@ const Login: FC = () => {
     }
     if (isSuccess) {
       openLoginNotification('success');
+      navigate(PROFILE);
     }
   }, [isError, isSuccess]);
 
@@ -82,50 +87,56 @@ const Login: FC = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledLoginForm>
-          <Controller
-            render={({ field }) => <StyledInput {...field} placeholder="Email" />}
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: 'Email is required', value: true },
-              pattern: { message: 'Email is not correct', value: emailRegExp },
-            }}
-          />
-          <Controller
-            render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
-            name="password"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: 'Password is required', value: true },
-              minLength: { message: 'Password should be more then 4 char', value: 4 },
-            }}
-          />
-          <Controller
-            render={({ field }) => (
-              <StyledCheckbox onChange={field.onChange} checked={field.value}>
-                Remember me
-              </StyledCheckbox>
-            )}
-            name="checkbox"
-            control={control}
-            defaultValue={false}
-          />
+      {/*<Preloader />*/}
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <StyledLoginForm>
+            <Controller
+              render={({ field }) => <StyledInput {...field} placeholder="Email" />}
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { message: 'Email is required', value: true },
+                pattern: { message: 'Email is not correct', value: emailRegExp },
+              }}
+            />
+            <Controller
+              render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { message: 'Password is required', value: true },
+                minLength: { message: 'Password should be more then 4 char', value: 4 },
+              }}
+            />
+            <Controller
+              render={({ field }) => (
+                <StyledCheckbox onChange={field.onChange} checked={field.value}>
+                  Remember me
+                </StyledCheckbox>
+              )}
+              name="checkbox"
+              control={control}
+              defaultValue={false}
+            />
 
-          {/*<StyledButton>Sign in</StyledButton>*/}
-          <input type="submit" />
-          <StyledLinksWrapper>
-            <div>
-              <span>New user?</span>
-              <NavLink to={REGISTRATION}>Sign up</NavLink>
-            </div>
-            <NavLink to={FORGOT_PASSWORD}> Forgot password</NavLink>
-          </StyledLinksWrapper>
-        </StyledLoginForm>
-      </form>
+            <Form.Item>
+              <StyledButton htmlType="submit">Sign in</StyledButton>
+            </Form.Item>
+            <StyledLinksWrapper>
+              <div>
+                <span>New user?</span>
+                <NavLink to={REGISTRATION}>Sign up</NavLink>
+              </div>
+              <NavLink to={FORGOT_PASSWORD}> Forgot password</NavLink>
+            </StyledLinksWrapper>
+          </StyledLoginForm>
+        </form>
+      )}
       {errors.email && <span>{errors.email?.message}</span>}
       {errors.password && <span>{errors.password?.message}</span>}
     </>

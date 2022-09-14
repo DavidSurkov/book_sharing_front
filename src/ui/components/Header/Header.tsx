@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { LOGIN, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
+import { Button } from 'antd';
+import { useSignOutMutation } from '../../../dal/auth/authAPI';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -16,11 +18,18 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [signOut, { isSuccess, isError, isLoading }] = useSignOutMutation();
+
+  const logOutHandler = () => {
+    signOut();
+  };
   return (
     <StyledHeader>
       <StyledNavLink to={PROFILE}>Profile</StyledNavLink>
       <StyledNavLink to={LOGIN}>Login</StyledNavLink>
       <StyledNavLink to={REGISTRATION}>Registration</StyledNavLink>
+      <Button onClick={logOutHandler}>Logout</Button>
     </StyledHeader>
   );
 };
