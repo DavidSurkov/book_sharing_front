@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { LOGIN, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
 import { Button } from 'antd';
 import { useSignOutMutation } from '../../../dal/auth/authAPI';
+import { LOGIN, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
 
 const StyledHeader = styled.header`
   display: flex;

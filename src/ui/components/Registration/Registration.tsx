@@ -4,10 +4,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, notification, Space } from 'antd';
-import { LOGIN } from '../../../utils/RoutesPathConstants';
+import { LOGIN, PROFILE } from '../../../utils/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
 import Preloader from '../Preloader/Preloader';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 type RegistrationTypes = {
   email: string;
@@ -17,6 +17,14 @@ type RegistrationTypes = {
 };
 
 type NotificationType = 'success' | 'error';
+
+const StyledRegistrationContainer = styled.div`
+  width: 100vw;
+  height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StyledRegisterForm = styled.div`
   display: flex;
@@ -50,6 +58,7 @@ const StyledUserOutlined = styled(UserOutlined)`
 `;
 
 const Registration: FC = () => {
+  const navigate = useNavigate();
   const [signUp, { data, error, isLoading, isSuccess, isError }] = useSignUpMutation();
 
   const openRegisterNotification = (type: NotificationType, error?: any) => {
@@ -65,6 +74,7 @@ const Registration: FC = () => {
     }
     if (isSuccess) {
       openRegisterNotification('success');
+      navigate(PROFILE);
     }
   }, [isError, isSuccess]);
 
@@ -80,7 +90,7 @@ const Registration: FC = () => {
   };
 
   return (
-    <>
+    <StyledRegistrationContainer>
       {isLoading ? (
         <Preloader />
       ) : (
@@ -151,7 +161,7 @@ const Registration: FC = () => {
       {errors.email && <span>{errors.email?.message}</span>}
       {errors.password && <span>{errors.password?.message}</span>}
       {errors.confirmPassword && <span>{errors.confirmPassword?.message}</span>}
-    </>
+    </StyledRegistrationContainer>
   );
 };
 

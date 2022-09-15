@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AUTH, LOGIN, LOGOUT, REGISTER } from '../../utils/constants/endpointConstants';
+import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from '../../utils/constants/endpointConstants';
 
 interface ISignUpRes {
   id: number;
@@ -26,7 +26,7 @@ interface ISignInReq {
 
 export const authApi = createApi({
   reducerPath: 'auth',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:4000', credentials: 'include' }),
   endpoints: (build) => ({
     signUp: build.mutation<ISignUpRes, ISignUpReq>({
       query: (body) => ({
@@ -51,7 +51,7 @@ export const authApi = createApi({
     }),
     authorise: build.query<void, void>({
       query: () => ({
-        url: `/${AUTH}`,
+        url: `/${AUTH}/${CHECK}`,
         method: 'GET',
       }),
     }),

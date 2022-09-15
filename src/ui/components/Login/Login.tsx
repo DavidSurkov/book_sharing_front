@@ -16,12 +16,20 @@ type LoginFormTypes = {
 
 type NotificationType = 'success' | 'error';
 
+const StyledLoginContainer = styled.div`
+  width: 100vw;
+  height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const StyledLoginForm = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 200px auto;
+
   border: 1px solid gray;
   border-radius: 2px;
   width: 250px;
@@ -86,7 +94,7 @@ const Login: FC = () => {
   };
 
   return (
-    <>
+    <StyledLoginContainer>
       {/*<Preloader />*/}
       {isLoading ? (
         <Preloader />
@@ -139,7 +147,7 @@ const Login: FC = () => {
       )}
       {errors.email && <span>{errors.email?.message}</span>}
       {errors.password && <span>{errors.password?.message}</span>}
-    </>
+    </StyledLoginContainer>
   );
 };
 

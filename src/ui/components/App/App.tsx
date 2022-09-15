@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import Main from '../Main/Main';
 import { useAuthoriseQuery } from '../../../dal/auth/authAPI';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN } from '../../../utils/RoutesPathConstants';
+import Header from '../Header/Header';
+import Routs from '../../Routs/Routs';
 
 const App = () => {
   const navigate = useNavigate();
@@ -13,7 +14,12 @@ const App = () => {
       navigate(LOGIN);
     }
   }, [isError]);
-  return <Main />;
+  return (
+    <div>
+      <Header />
+      <Routs />
+    </div>
+  );
 };
 
 export default App;
