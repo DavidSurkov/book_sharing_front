@@ -27,7 +27,7 @@ interface ISignInReq {
 export const authApi = createApi({
   reducerPath: 'auth',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:4000',
+    baseUrl: process.env.BACKEND_URL || 'http://localhost:4000',
     credentials: 'include',
     prepareHeaders: (headers) => {
       headers.set('Access-Control-Allow-Origin', process.env.BACKEND_URL || 'http://localhost:4000');

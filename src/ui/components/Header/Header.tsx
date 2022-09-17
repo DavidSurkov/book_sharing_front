@@ -2,9 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from 'antd';
-import { useSignOutMutation } from '../../../dal/auth/authAPI';
-import { LOGIN } from '../../../utils/RoutesPathConstants';
-import ModalWindow from '../ModalWindow/ModalWindow';
+import { useSignOutMutation } from 'dal/auth/authAPI';
+import { LOGIN } from 'utils/RoutesPathConstants';
+import ModalWindow from 'ui/components/ModalWindow/ModalWindow';
 
 const StyledHeader = styled.header`
   display: flex;
@@ -22,7 +22,7 @@ const StyledHeader = styled.header`
 
 const Header = () => {
   const navigate = useNavigate();
-  const [signOut, { isSuccess, isError, isLoading }] = useSignOutMutation();
+  const [signOut] = useSignOutMutation();
 
   const logOutHandler = () => {
     signOut();

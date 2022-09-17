@@ -1,19 +1,12 @@
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { FORGOT_PASSWORD, HOME, REGISTRATION } from '../../../utils/RoutesPathConstants';
+import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Form, Input, notification } from 'antd';
-import { emailRegExp } from '../../../utils/regExp';
-import { useSignInMutation } from '../../../dal/auth/authAPI';
+import { emailRegExp } from 'utils/regExp';
+import { useSignInMutation } from 'dal/auth/authAPI';
 import Preloader from '../Preloader/Preloader';
-
-type LoginFormTypes = {
-  email: string;
-  password: string;
-};
-
-type NotificationType = 'success' | 'error';
 
 const StyledLoginContainer = styled.div`
   width: 100vw;
@@ -56,16 +49,38 @@ const StyledLinksWrapper = styled.div`
   justify-content: space-between;
 `;
 
+const StyledErrorSpanEmail = styled.span`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 50px;
+  font-family: Arial, 'sans-serif';
+  color: #ff5f5d;
+  font-size: 20px;
+`;
+
+const StyledErrorSpanPass = styled.span`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 25px;
+  font-family: Arial, 'sans-serif';
+  color: #ff5f5d;
+  font-size: 20px;
+`;
+
+type LoginFormTypes = {
+  email: string;
+  password: string;
+};
+
+type NotificationType = 'success' | 'error';
+
 const Login: FC = () => {
   const navigate = useNavigate();
-  const [signIn, { data, error, isLoading, isSuccess, isError }] = useSignInMutation();
-
-  const openLoginNotification = (type: NotificationType, error?: any) => {
-    notification[type]({
-      message: `${type === 'success' ? 'Success' : 'Error'}`,
-      description: `${type === 'success' ? '' : error.data?.message}`,
-    });
-  };
+  const [signIn, { error, isLoading, isSuccess, isError }] = useSignInMutation();
 
   useEffect(() => {
     if (isError) {
@@ -76,6 +91,13 @@ const Login: FC = () => {
       navigate(HOME);
     }
   }, [isError, isSuccess]);
+
+  const openLoginNotification = (type: NotificationType, error?: any) => {
+    notification[type]({
+      message: `${type === 'success' ? 'Success' : 'Error'}`,
+      description: `${type === 'success' ? '' : error.data?.message}`,
+    });
+  };
 
   const {
     control,
@@ -89,48 +111,45 @@ const Login: FC = () => {
 
   return (
     <StyledLoginContainer>
-      {/*<Preloader />*/}
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <StyledLoginForm>
-            <Controller
-              render={({ field }) => <StyledInput {...field} placeholder="Email" />}
-              name="email"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: { message: 'Email is required', value: true },
-                pattern: { message: 'Email is not correct', value: emailRegExp },
-              }}
-            />
-            <Controller
-              render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: { message: 'Password is required', value: true },
-                minLength: { message: 'Password should be more then 8 char', value: 8 },
-              }}
-            />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <StyledLoginForm>
+          <Controller
+            render={({ field }) => <StyledInput {...field} placeholder="Email" />}
+            name="email"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: { message: 'Email is required', value: true },
+              pattern: { message: 'Email is not correct', value: emailRegExp },
+            }}
+          />
+          <Controller
+            render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
+            name="password"
+            control={control}
+            defaultValue=""
+            rules={{
+              required: { message: 'Password is required', value: true },
+              minLength: { message: 'Password should be more then 8 char', value: 8 },
+            }}
+          />
 
-            <Form.Item>
-              <StyledButton htmlType="submit">Sign in</StyledButton>
-            </Form.Item>
-            <StyledLinksWrapper>
-              <div>
-                <span>New user?</span>
-                <NavLink to={REGISTRATION}>Sign up</NavLink>
-              </div>
-              <NavLink to={FORGOT_PASSWORD}> Forgot password</NavLink>
-            </StyledLinksWrapper>
-          </StyledLoginForm>
-        </form>
-      )}
-      {errors.email && <span>{errors.email?.message}</span>}
-      {errors.password && <span>{errors.password?.message}</span>}
+          <Form.Item>
+            <StyledButton htmlType="submit">Sign in</StyledButton>
+          </Form.Item>
+          <StyledLinksWrapper>
+            <div>
+              <span>New user?</span>
+              <NavLink to={REGISTRATION}>Sign up</NavLink>
+            </div>
+            <NavLink to={FORGOT_PASSWORD}> Forgot password</NavLink>
+          </StyledLinksWrapper>
+        </StyledLoginForm>
+      </form>
+
+      {errors.email && <StyledErrorSpanEmail>{errors.email?.message}</StyledErrorSpanEmail>}
+      {errors.password && <StyledErrorSpanPass>{errors.password?.message}</StyledErrorSpanPass>}
+      {isLoading && <Preloader />}
     </StyledLoginContainer>
   );
 };

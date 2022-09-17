@@ -20,9 +20,14 @@ const UploadFile: FC<UploadFilePropsType> = ({ accept, title }) => {
   };
 
   const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
       console.log('file: ', file);
+      if (file) {
+        formData.append('file', file);
+      }
 
       if (file.size < 4000000) {
         convertToBase64(file, (file64: string) => {

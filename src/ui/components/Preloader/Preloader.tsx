@@ -2,8 +2,11 @@ import { FC } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const StyledPreloader = styled.div`
-  margin: 40vh auto;
   text-align: center;
+  z-index: 1;
+  position: absolute;
+  bottom: 25px;
+  left: 25px;
 `;
 
 const StyledTitle = styled.div`

@@ -7,16 +7,16 @@ import Routs from '../../Routs/Routs';
 
 const App = () => {
   const navigate = useNavigate();
-  const { data, isSuccess, isError } = useAuthoriseQuery();
+  const { isError, isSuccess } = useAuthoriseQuery();
 
   useEffect(() => {
     if (isError) {
       navigate(LOGIN);
     }
-  }, [isError]);
+  }, [isError, isSuccess]);
   return (
     <div>
-      <Header />
+      {isSuccess && <Header />}
       <Routs />
     </div>
   );
