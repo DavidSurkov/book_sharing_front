@@ -4,8 +4,8 @@ import React from 'react';
 //   background-color: red;
 // `;
 
-const Profile = () => {
-  return <div>Profile</div>;
+const Home = () => {
+  return <div>Home page</div>;
 };
 
-export default Profile;
+export default Home;

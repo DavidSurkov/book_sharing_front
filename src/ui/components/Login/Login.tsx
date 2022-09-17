@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { FORGOT_PASSWORD, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
+import { FORGOT_PASSWORD, HOME, REGISTRATION } from '../../../utils/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Checkbox, Form, Input, notification } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import { emailRegExp } from '../../../utils/regExp';
 import { useSignInMutation } from '../../../dal/auth/authAPI';
 import Preloader from '../Preloader/Preloader';
@@ -11,7 +11,6 @@ import Preloader from '../Preloader/Preloader';
 type LoginFormTypes = {
   email: string;
   password: string;
-  checkbox: boolean;
 };
 
 type NotificationType = 'success' | 'error';
@@ -51,11 +50,6 @@ const StyledButton = styled(Button)`
   color: gray;
 `;
 
-const StyledCheckbox = styled(Checkbox)`
-  margin-top: 8px;
-  color: gray;
-`;
-
 const StyledLinksWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -69,7 +63,7 @@ const Login: FC = () => {
   const openLoginNotification = (type: NotificationType, error?: any) => {
     notification[type]({
       message: `${type === 'success' ? 'Success' : 'Error'}`,
-      description: `${type === 'success' ? '' : error.data.message}`,
+      description: `${type === 'success' ? '' : error.data?.message}`,
     });
   };
 
@@ -79,7 +73,7 @@ const Login: FC = () => {
     }
     if (isSuccess) {
       openLoginNotification('success');
-      navigate(PROFILE);
+      navigate(HOME);
     }
   }, [isError, isSuccess]);
 
@@ -118,18 +112,8 @@ const Login: FC = () => {
               defaultValue=""
               rules={{
                 required: { message: 'Password is required', value: true },
-                minLength: { message: 'Password should be more then 4 char', value: 4 },
+                minLength: { message: 'Password should be more then 8 char', value: 8 },
               }}
-            />
-            <Controller
-              render={({ field }) => (
-                <StyledCheckbox onChange={field.onChange} checked={field.value}>
-                  Remember me
-                </StyledCheckbox>
-              )}
-              name="checkbox"
-              control={control}
-              defaultValue={false}
             />
 
             <Form.Item>

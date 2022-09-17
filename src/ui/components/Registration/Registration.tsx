@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, notification, Space } from 'antd';
-import { LOGIN, PROFILE } from '../../../utils/RoutesPathConstants';
+import { LOGIN } from '../../../utils/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
 import Preloader from '../Preloader/Preloader';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -64,7 +64,7 @@ const Registration: FC = () => {
   const openRegisterNotification = (type: NotificationType, error?: any) => {
     notification[type]({
       message: `${type === 'success' ? 'Success' : 'Error'}`,
-      description: `${type === 'success' ? '' : error.data.message}`,
+      description: `${type === 'success' ? '' : error.data?.message}`,
     });
   };
 
@@ -74,7 +74,7 @@ const Registration: FC = () => {
     }
     if (isSuccess) {
       openRegisterNotification('success');
-      navigate(PROFILE);
+      navigate(LOGIN);
     }
   }, [isError, isSuccess]);
 
