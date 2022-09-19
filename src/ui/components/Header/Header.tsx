@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Button } from 'antd';
 import { useSignOutMutation } from 'dal/auth/authAPI';
 import { LOGIN } from 'utils/RoutesPathConstants';
-import ModalWindow from 'ui/components/ModalWindow/ModalWindow';
+import ModalWindow from '../ModalWindow/ModalWindow';
 
 const StyledHeader = styled.header`
   display: flex;
