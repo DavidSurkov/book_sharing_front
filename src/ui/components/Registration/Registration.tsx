@@ -1,13 +1,23 @@
 import React, { FC, useEffect } from 'react';
-import styled from 'styled-components';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/regExp';
-import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input, notification, Space } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Form, notification, Space } from 'antd';
 import { LOGIN } from '../../../utils/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Preloader from '../Preloader/Preloader';
+import {
+  StyledButton,
+  StyledErrorSpanConfirmPass,
+  StyledErrorSpanEmail,
+  StyledErrorSpanPass,
+  StyledInput,
+  StyledInputPassword,
+  StyledRegisterForm,
+  StyledRegistrationContainer,
+  StyledUserOutlined,
+} from './Registration.styles';
 
 type RegistrationTypes = {
   email: string;
@@ -17,78 +27,6 @@ type RegistrationTypes = {
 };
 
 type NotificationType = 'success' | 'error';
-
-const StyledRegistrationContainer = styled.div`
-  width: 100vw;
-  height: calc(100vh - 60px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledRegisterForm = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 200px auto;
-  border: 1px solid gray;
-  border-radius: 2px;
-  width: 250px;
-  height: 300px;
-`;
-
-const StyledInput = styled(Input)`
-  max-width: 200px;
-  margin-bottom: 8px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 200px;
-  margin: 8px 0;
-  color: gray;
-`;
-
-const StyledInputPassword = styled(Input.Password)`
-  width: 200px;
-`;
-
-const StyledUserOutlined = styled(UserOutlined)`
-  color: gray;
-`;
-
-const StyledErrorSpanEmail = styled.span`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 75px;
-  font-family: Arial, 'sans-serif';
-  color: #ff5f5d;
-  font-size: 20px;
-`;
-
-const StyledErrorSpanPass = styled.span`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 50px;
-  font-family: Arial, 'sans-serif';
-  color: #ff5f5d;
-  font-size: 20px;
-`;
-
-const StyledErrorSpanConfirmPass = styled.span`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 25px;
-  font-family: Arial, 'sans-serif';
-  color: #ff5f5d;
-  font-size: 20px;
-`;
 
 const Registration: FC = () => {
   const navigate = useNavigate();

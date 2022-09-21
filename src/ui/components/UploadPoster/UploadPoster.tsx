@@ -1,67 +1,70 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { Button } from 'antd';
+import { ChangeEventHandler, FC, useRef, useState } from 'react';
+import { Button, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import { posterTypes } from '../../../utils/constants/fileTypes';
+import { StyledError } from 'ui/common-styles/common.styles';
 
-const StyledInputFile = styled.input`
-  visibility: hidden;
-`;
-
-type UploadFilePropsType = {
-  title: string;
+type UploadPosterPropsType = {
+  setPosterFile: (posterFile: File) => void;
+  setPosterError: (posterError: boolean) => void;
+  isPropsError: boolean;
 };
 
-const UploadPoster = React.forwardRef<HTMLInputElement, UploadFilePropsType>(({ title }, ref) => {
+const UploadPoster: FC<UploadPosterPropsType> = ({ setPosterFile, setPosterError, isPropsError = false }) => {
   const [newImage, setNewImage] = useState<string>();
+  const inputPosterRef = useRef<HTMLInputElement>(null);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const selectFileHandler = () => {
-    inputRef && inputRef.current?.click();
+  const selectPosterHandler = () => {
+    inputPosterRef && inputPosterRef.current?.click();
   };
 
-  const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const formData = new FormData();
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0];
-      console.log('file: ', file);
-      if (file) {
-        formData.append('file', file);
-      }
-      if (file.size < 5000000) {
-        convertToBase64(file, (file64: string) => {
+  const onChangePosterHandler: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    if (target.files && target.files[0]) {
+      const poster = target.files[0];
+      setPosterError(false);
+      if (poster.size < 5e6) {
+        convertToBase64(poster, (file64: string) => {
           setNewImage(file64);
         });
-      } else {
-        console.error('Error: ', 'File is to big');
       }
+      if (poster.size > 5e6) {
+        notification.error({ message: 'File is more then 5mb' });
+        return;
+      }
+      if (!Object.values(posterTypes).includes(poster.type)) {
+        debugger;
+        notification.error({ message: 'Wrong poster format' });
+        return;
+      }
+      setPosterFile(poster);
     }
   };
 
-  const convertToBase64 = (file: File, callback: (value: string) => void) => {
+  const convertToBase64 = (poster: File, callBack: (value: string) => void) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       const file64 = reader.result as string;
-      callback(file64);
+      callBack(file64);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(poster);
   };
 
   return (
-    <>
-      <Button ref={ref} style={{ width: '150px' }} onClick={selectFileHandler} icon={<UploadOutlined />}>
-        {title}
+    <div>
+      <Button style={{ width: '150px' }} onClick={selectPosterHandler} icon={<UploadOutlined />}>
+        Upload poster
       </Button>
-      {newImage && (
-        <img
-          style={{ height: '100px', width: '100px', margin: '10px', border: '1px solid gray' }}
-          src={newImage}
-          alt="img"
-        />
-      )}
-      <StyledInputFile ref={inputRef} type="file" accept=".jpg, .jpeg, .png" onChange={uploadHandler} />
-    </>
+      <input
+        ref={inputPosterRef}
+        onChange={onChangePosterHandler}
+        hidden
+        type="file"
+        accept="image/jpeg, image/jpg, image/png"
+      />
+      {newImage && <img src={newImage} alt="poster image" />}
+      {isPropsError && <StyledError>Poster is required!</StyledError>}
+    </div>
   );
-});
+};
 
 export default UploadPoster;

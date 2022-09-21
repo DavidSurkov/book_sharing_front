@@ -1,95 +1,37 @@
-import { Button, Input, Modal, notification, Select } from 'antd';
-import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
+import { Button, Modal, Select } from 'antd';
+import React, { FC, useState } from 'react';
 import { useAllGenreQuery } from '../../../dal/book/bookAPI';
 import { useToggle } from '../../../utils/hooks/use-toggle.hook';
 import { Controller, useForm } from 'react-hook-form';
-import styled from 'styled-components';
-import { UploadOutlined } from '@ant-design/icons';
-import { bookTypes, posterTypes } from '../../../utils/constants/fileTypes';
-
-const StyledGenreDateWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-`;
-
-const StyledUploadWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin: 20px auto;
-  width: 100%;
-  //background-color: gray;
-`;
-
-const StyledUploadFileWrapper = styled.div`
-  display: flex;
-  width: 45%;
-  flex-direction: column;
-  //background-color: gray;
-  align-items: center;
-`;
-
-const StyledUploadPosterWrapper = styled.div`
-  display: flex;
-  width: 45%;
-  flex-direction: column;
-  //background-color: gray;
-  align-items: center;
-`;
-
-type GenreType = {
-  id: number;
-  name: string;
-};
+import UploadBook from '../UploadFile/UploadBook';
+import UploadPoster from '../UploadPoster/UploadPoster';
+import {
+  StyledGenreDateWrapper,
+  StyledInput,
+  StyledSelect,
+  StyledTextArea,
+  StyledUploadFileWrapper,
+  StyledUploadPosterWrapper,
+  StyledUploadWrapper,
+} from './ModalWindow.styles';
+import { StyledError } from 'ui/common-styles/common.styles';
 
 type AddBookFormType = {
   title: string;
   author: string;
-  genre: GenreType[];
+  genre: number;
   year: Date;
   description: string;
-  poster: Blob;
-  book: Blob;
 };
 
 const ModalWindow: FC = () => {
   const { modal, toggleModal } = useToggle();
   const [bookFile, setBookFile] = useState<File | null>();
   const [posterFile, setPosterFile] = useState<File | null>();
+  const [bookError, setBookError] = useState(false);
+  const [posterError, setPosterError] = useState(false);
 
-  const onChangeBookHandler: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    if (target.files && target.files[0]) {
-      const book = target.files[0];
-      if (book.size > 5e6) {
-        notification.error({ message: 'File is more then 5mb' });
-        return;
-      }
-      if (!Object.values(bookTypes).includes(book.type)) {
-        notification.error({ message: 'Wrong book format' });
-        return;
-      }
-      setBookFile(book);
-    }
-  };
-  const onChangePosterHandler: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    if (target.files && target.files[0]) {
-      const poster = target.files[0];
-      if (poster.size > 5e6) {
-        notification.error({ message: 'File is more then 5mb' });
-        return;
-      }
-      if (!Object.values(posterTypes).includes(poster.type)) {
-        debugger;
-        notification.error({ message: 'Wrong poster format' });
-        return;
-      }
-      setPosterFile(poster);
-    }
-  };
-
-  const { data } = useAllGenreQuery();
-
-  const { TextArea } = Input;
+  const { data: genres } = useAllGenreQuery();
 
   const {
     control,
@@ -97,23 +39,32 @@ const ModalWindow: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<AddBookFormType>();
+
   const onSubmit = (data: AddBookFormType) => {
-    console.log({ ...data, bookFile, posterFile });
-  };
+    const genre =
+      genres &&
+      genres.find((e) => {
+        return e.id === data.genre;
+      });
+    const formData = new FormData();
+    if (!bookFile) {
+      setBookError(true);
+      return;
+    }
+    if (!posterFile) {
+      setPosterError(true);
+      return;
+    }
+    formData.append('title', data.title);
+    formData.append('author', data.author);
+    formData.append('year', new Date(data.year).getFullYear().toString());
+    formData.append('description', data.description);
+    genre && formData.append('genre', genre.toString());
+    formData.append('poster', posterFile);
+    formData.append('book', bookFile);
 
-  const onOkHandler = () => {
+    genre && console.log(genre.toString());
     toggleModal();
-  };
-
-  const inputBookRef = useRef<HTMLInputElement>(null);
-  const inputPosterRef = useRef<HTMLInputElement>(null);
-
-  const selectBookHandler = () => {
-    inputBookRef && inputBookRef.current?.click();
-  };
-
-  const selectPosterHandler = () => {
-    inputPosterRef && inputPosterRef.current?.click();
   };
 
   return (
@@ -121,10 +72,19 @@ const ModalWindow: FC = () => {
       <Button type="primary" onClick={toggleModal}>
         Add new book
       </Button>
-      <Modal title="Add new book" centered open={modal} onOk={onOkHandler} onCancel={toggleModal} width={500}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <Modal
+        title="Add new book"
+        centered
+        open={modal}
+        onOk={handleSubmit(onSubmit)}
+        onCancel={toggleModal}
+        width={500}
+      >
+        <form>
           <Controller
-            render={({ field }) => <Input required placeholder="Book title" {...field} style={{ width: '100%' }} />}
+            render={({ field }) => (
+              <StyledInput required placeholder="Book title" {...field} isError={!!errors.title} />
+            )}
             name="title"
             control={control}
             defaultValue=""
@@ -132,9 +92,10 @@ const ModalWindow: FC = () => {
               required: { message: 'Title is required', value: true },
             }}
           />
+          {errors.title && <StyledError>Book title is required!</StyledError>}
 
           <Controller
-            render={({ field }) => <Input required placeholder="Author" {...field} style={{ width: '100%' }} />}
+            render={({ field }) => <StyledInput required placeholder="Author" {...field} isError={!!errors.author} />}
             name="author"
             control={control}
             defaultValue=""
@@ -142,40 +103,47 @@ const ModalWindow: FC = () => {
               required: { message: 'Author is required', value: true },
             }}
           />
+          {errors.author && <StyledError>Author is required!</StyledError>}
 
           <StyledGenreDateWrapper>
-            <Controller
-              render={({ field }) => (
-                <Select style={{ width: '220px' }} {...field} placeholder={'Genre'}>
-                  {data &&
-                    data.map((i) => (
-                      <Select.Option key={i.id} value={i.name}>
-                        {i.name}
-                      </Select.Option>
-                    ))}
-                </Select>
-              )}
-              name="genre"
-              control={control}
-              // defaultValue=""
-              rules={{
-                required: { message: 'Genre is required', value: true },
-              }}
-            />
-            <input
-              type="date"
-              {...register('year', {
-                required: true,
-              })}
-            />
+            <div>
+              <Controller
+                render={({ field }) => (
+                  <StyledSelect isError={!!errors.genre} {...field} placeholder={'Genre'}>
+                    {genres &&
+                      genres.map((i) => (
+                        <Select.Option key={i.id} value={i.id}>
+                          {i.name}
+                        </Select.Option>
+                      ))}
+                  </StyledSelect>
+                )}
+                name="genre"
+                control={control}
+                rules={{
+                  required: { message: 'Genre is required', value: true },
+                }}
+              />
+              {errors.genre && <StyledError>Genre is required!</StyledError>}
+            </div>
+            <div>
+              <input
+                type="date"
+                max={new Date().toDateString()}
+                {...register('year', {
+                  required: true,
+                })}
+              />
+              {errors.year && <StyledError>Year is required!</StyledError>}
+            </div>
           </StyledGenreDateWrapper>
+
           <Controller
             render={({ field }) => (
-              <TextArea
-                required
+              <StyledTextArea
+                isError={!!errors.description}
                 {...field}
                 placeholder={'Description'}
-                style={{ width: '100%', resize: 'none' }}
                 showCount
                 maxLength={250}
                 rows={3}
@@ -183,24 +151,21 @@ const ModalWindow: FC = () => {
             )}
             name={'description'}
             control={control}
+            rules={{
+              required: { message: 'Genre is required', value: true },
+            }}
           />
+          {errors.description && <StyledError>Description is required!</StyledError>}
 
           <StyledUploadWrapper>
             <StyledUploadFileWrapper>
-              <Button style={{ width: '150px' }} onClick={selectBookHandler} icon={<UploadOutlined />}>
-                Upload book
-                <input ref={inputBookRef} hidden onChange={onChangeBookHandler} type="file" />
-              </Button>
+              <UploadBook setBookFile={setBookFile} setBookError={setBookError} isPropsError={bookError} />
             </StyledUploadFileWrapper>
 
             <StyledUploadPosterWrapper>
-              <Button style={{ width: '150px' }} onClick={selectPosterHandler} icon={<UploadOutlined />}>
-                Upload poster
-                <input ref={inputPosterRef} onChange={onChangePosterHandler} hidden type="file" />
-              </Button>
+              <UploadPoster setPosterFile={setPosterFile} setPosterError={setPosterError} isPropsError={posterError} />
             </StyledUploadPosterWrapper>
           </StyledUploadWrapper>
-          <Button htmlType="submit">Sign in</Button>
         </form>
       </Modal>
     </>
