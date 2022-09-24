@@ -5,3 +5,4 @@ export const AUTH = 'auth';
 export const CHECK = 'check';
 export const GENRE = 'genre';
 export const ALL = 'all';
+export const BOOK = 'book';

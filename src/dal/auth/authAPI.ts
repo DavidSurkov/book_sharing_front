@@ -1,19 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from '../../utils/constants/endpointConstants';
 
-interface ISignUpRes {
-  id: number;
-  name: string;
-  email: string;
-}
-
 interface ISignUpReq {
   name: string;
   email: string;
   password: string;
 }
 
-interface ISignInRes {
+export interface IUser {
   id: number;
   name: string;
   email: string;
@@ -36,15 +30,15 @@ export const authApi = createApi({
     mode: 'cors',
   }),
   endpoints: (build) => ({
-    signUp: build.mutation<ISignUpRes, ISignUpReq>({
+    signUp: build.mutation<IUser, ISignUpReq>({
       query: (body) => ({
         url: `/${AUTH}/${REGISTER}`,
         method: 'POST',
         body,
       }),
-      transformResponse: (baseQueryReturnValue: ISignUpRes) => baseQueryReturnValue,
+      transformResponse: (baseQueryReturnValue: IUser) => baseQueryReturnValue,
     }),
-    signIn: build.mutation<ISignInRes, ISignInReq>({
+    signIn: build.mutation<IUser, ISignInReq>({
       query: (body) => ({
         url: `/${AUTH}/${LOGIN}`,
         method: 'POST',
@@ -57,7 +51,7 @@ export const authApi = createApi({
         method: 'POST',
       }),
     }),
-    authorise: build.query<void, void>({
+    authorise: build.query<IUser, void>({
       query: () => ({
         url: `/${AUTH}/${CHECK}`,
         method: 'GET',

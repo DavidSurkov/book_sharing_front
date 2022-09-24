@@ -1,12 +1,12 @@
 import React, { FC, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { emailRegExp } from '../../../utils/regExp';
+import { emailRegExp } from '../../../utils/constants/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Form, notification, Space } from 'antd';
-import { LOGIN } from '../../../utils/RoutesPathConstants';
+import { LOGIN } from '../../../utils/constants/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../../components/Preloader/Preloader';
 import {
   StyledButton,
   StyledErrorSpanConfirmPass,

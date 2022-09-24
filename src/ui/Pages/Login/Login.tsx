@@ -1,12 +1,14 @@
 import React, { FC, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/RoutesPathConstants';
+import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Form, Input, notification } from 'antd';
-import { emailRegExp } from 'utils/regExp';
+import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'dal/auth/authAPI';
-import Preloader from '../Preloader/Preloader';
+import Preloader from '../../components/Preloader/Preloader';
+import { signInUser } from '../../../bll/user-slice';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 const StyledLoginContainer = styled.div`
   width: 100vw;
@@ -80,13 +82,15 @@ type NotificationType = 'success' | 'error';
 
 const Login: FC = () => {
   const navigate = useNavigate();
-  const [signIn, { error, isLoading, isSuccess, isError }] = useSignInMutation();
+  const dispatch = useAppDispatch();
+  const [signIn, { error, isLoading, isSuccess, isError, data: response }] = useSignInMutation();
 
   useEffect(() => {
     if (isError) {
       openLoginNotification('error', error);
     }
-    if (isSuccess) {
+    if (isSuccess && response) {
+      dispatch(signInUser(response));
       openLoginNotification('success');
       navigate(HOME);
     }

@@ -22,20 +22,17 @@ const UploadPoster: FC<UploadPosterPropsType> = ({ setPosterFile, setPosterError
     if (target.files && target.files[0]) {
       const poster = target.files[0];
       setPosterError(false);
-      if (poster.size < 5e6) {
-        convertToBase64(poster, (file64: string) => {
-          setNewImage(file64);
-        });
-      }
       if (poster.size > 5e6) {
         notification.error({ message: 'File is more then 5mb' });
         return;
       }
       if (!Object.values(posterTypes).includes(poster.type)) {
-        debugger;
         notification.error({ message: 'Wrong poster format' });
         return;
       }
+      convertToBase64(poster, (file64: string) => {
+        setNewImage(file64);
+      });
       setPosterFile(poster);
     }
   };
@@ -59,7 +56,7 @@ const UploadPoster: FC<UploadPosterPropsType> = ({ setPosterFile, setPosterError
         onChange={onChangePosterHandler}
         hidden
         type="file"
-        accept="image/jpeg, image/jpg, image/png"
+        accept={`${posterTypes.jpeg}, ${posterTypes.jpg}, ${posterTypes.png}`}
       />
       {newImage && <img src={newImage} alt="poster image" />}
       {isPropsError && <StyledError>Poster is required!</StyledError>}

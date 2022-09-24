@@ -47,7 +47,7 @@ const UploadBook: FC<UploadBookPropsType> = ({ setBookFile, setBookError, isProp
         hidden
         onChange={onChangeBookHandler}
         type="file"
-        accept="application/pdf, application/epub+zip, application/fb2, application/msword, text/plain"
+        accept={`${bookTypes.fb2}, ${bookTypes.epub}, ${bookTypes.txt}, ${bookTypes.pdf}, ${bookTypes.word}`}
       />
       {newBook && <p>{newBook.name}</p>}
       {isPropsError && <StyledError>Book is required!</StyledError>}

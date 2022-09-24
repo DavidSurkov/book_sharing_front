@@ -1,6 +1,6 @@
 import { Button, Modal, Select } from 'antd';
-import React, { FC, useState } from 'react';
-import { useAllGenreQuery } from '../../../dal/book/bookAPI';
+import React, { FC, useEffect, useState } from 'react';
+import { useAllGenreQuery, usePostBookMutation } from '../../../dal/book/bookAPI';
 import { useToggle } from '../../../utils/hooks/use-toggle.hook';
 import { Controller, useForm } from 'react-hook-form';
 import UploadBook from '../UploadFile/UploadBook';
@@ -22,6 +22,8 @@ type AddBookFormType = {
   genre: number;
   year: Date;
   description: string;
+  book?: File | null;
+  poster?: File | null;
 };
 
 const ModalWindow: FC = () => {
@@ -32,39 +34,52 @@ const ModalWindow: FC = () => {
   const [posterError, setPosterError] = useState(false);
 
   const { data: genres } = useAllGenreQuery();
+  const [postBook, { isError, isSuccess, isLoading }] = usePostBookMutation();
 
   const {
+    setValue,
     control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<AddBookFormType>();
 
+  useEffect(() => {
+    setValue('book', bookFile);
+  }, [bookFile]);
+
+  useEffect(() => {
+    setValue('poster', posterFile);
+  }, [posterFile]);
+
+  const formData = new FormData();
   const onSubmit = (data: AddBookFormType) => {
-    const genre =
-      genres &&
-      genres.find((e) => {
+    if (genres) {
+      const genre = genres.find((e) => {
         return e.id === data.genre;
       });
-    const formData = new FormData();
-    if (!bookFile) {
-      setBookError(true);
-      return;
-    }
-    if (!posterFile) {
-      setPosterError(true);
-      return;
-    }
-    formData.append('title', data.title);
-    formData.append('author', data.author);
-    formData.append('year', new Date(data.year).getFullYear().toString());
-    formData.append('description', data.description);
-    genre && formData.append('genre', genre.toString());
-    formData.append('poster', posterFile);
-    formData.append('book', bookFile);
+      if (!bookFile) {
+        setBookError(true);
+        return;
+      }
+      if (!posterFile) {
+        setPosterError(true);
+        return;
+      }
 
-    genre && console.log(genre.toString());
-    toggleModal();
+      formData.append('title', data.title);
+      formData.append('author', data.author);
+      formData.append('year', new Date(data.year).getFullYear().toString());
+      formData.append('description', data.description);
+      genre && formData.append('genres[0]', `{"id": ${genre.id}, "name": "${genre.name}"}`);
+      formData.append('book', data.book instanceof File ? data.book : `${data.book}`);
+      formData.append('poster', data.poster instanceof File ? data.poster : `${data.poster}`);
+      // console.log(String(genre));
+      console.log(data.book);
+      console.log(data.poster);
+      postBook(formData);
+      toggleModal();
+    }
   };
 
   return (
