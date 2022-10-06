@@ -1,5 +1,5 @@
 export const LOGIN = '/login';
-export const PROFILE = '/profile';
+export const BOOK = '/book/:id';
+export const HOME = '/home';
 export const REGISTRATION = '/registration';
-export const MAIN = '/main';
 export const FORGOT_PASSWORD = '/forgot_password';

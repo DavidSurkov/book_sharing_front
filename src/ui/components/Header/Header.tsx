@@ -1,26 +1,43 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { LOGIN, PROFILE, REGISTRATION } from '../../../utils/RoutesPathConstants';
+import { Button } from 'antd';
+import { useSignOutMutation } from 'dal/auth/authAPI';
+import { LOGIN } from 'utils/constants/RoutesPathConstants';
+import ModalWindow from '../ModalWindow/ModalWindow';
+import { signOutUser } from '../../../bll/user-slice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 const StyledHeader = styled.header`
   display: flex;
   position: sticky;
   height: 60px;
   border-bottom: 1px solid gray;
-`;
-
-const StyledNavLink = styled(NavLink)`
-  margin: 5px;
-  color: black;
+  justify-content: flex-end;
+  padding: 15px;
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const userName = useAppSelector((state) => state.user);
+  const [signOut] = useSignOutMutation();
+
+  const logOutHandler = () => {
+    signOut();
+    dispatch(signOutUser());
+    navigate(LOGIN);
+  };
   return (
     <StyledHeader>
-      <StyledNavLink to={PROFILE}>Profile</StyledNavLink>
-      <StyledNavLink to={LOGIN}>Login</StyledNavLink>
-      <StyledNavLink to={REGISTRATION}>Registration</StyledNavLink>
+      <ModalWindow />
+      <div>
+        <p>{userName.name}</p>
+        <p>{userName.email}</p>
+      </div>
+      <Button style={{ marginLeft: '15px' }} onClick={logOutHandler}>
+        Logout
+      </Button>
     </StyledHeader>
   );
 };
