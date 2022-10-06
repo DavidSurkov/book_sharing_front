@@ -74,11 +74,8 @@ const ModalWindow: FC = () => {
       genre && formData.append('genres[0]', `{"id": ${genre.id}, "name": "${genre.name}"}`);
       formData.append('book', data.book instanceof File ? data.book : `${data.book}`);
       formData.append('poster', data.poster instanceof File ? data.poster : `${data.poster}`);
-      // console.log(String(genre));
-      console.log(data.book);
-      console.log(data.poster);
       postBook(formData);
-      toggleModal();
+      isSuccess && toggleModal();
     }
   };
 
