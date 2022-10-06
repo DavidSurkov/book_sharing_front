@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useAuthoriseQuery } from '../dal/auth/authAPI';
+import { useAuthoriseQuery } from 'dal/auth/authAPI';
 import { useNavigate } from 'react-router-dom';
-import { LOGIN } from '../utils/constants/RoutesPathConstants';
-import Header from '../ui/components/Header/Header';
-import Routs from '../ui/Routs/Routs';
-import { signInUser } from '../bll/user-slice';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { LOGIN } from 'utils/constants/RoutesPathConstants';
+import Header from 'ui/components/Header/Header';
+import Routs from 'ui/Routs/Routs';
+import { signInUser } from 'bll/user-slice';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
 const App = () => {
   const navigate = useNavigate();
