@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from '../../utils/constants/endpointConstants';
+import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from 'utils/constants/endpointConstants';
 
 interface ISignUpReq {
   name: string;

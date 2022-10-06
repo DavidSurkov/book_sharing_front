@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { userSlice } from './user-slice';
-import { authApi } from '../dal/auth/authAPI';
-import { bookAPI } from '../dal/book/bookAPI';
+import { userSlice } from 'bll/user-slice';
+import { authApi } from 'dal/auth/authAPI';
+import { bookAPI } from 'dal/book/bookAPI';
 
 export const store = configureStore({
   reducer: {
