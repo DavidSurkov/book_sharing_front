@@ -1,75 +1,21 @@
 import React, { FC, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Form, Input, notification } from 'antd';
+import { Form, notification } from 'antd';
 import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'dal/auth/authAPI';
-import Preloader from '../../components/Preloader/Preloader';
-
-const StyledLoginContainer = styled.div`
-  width: 100vw;
-  height: calc(100vh - 60px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledLoginForm = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  border: 1px solid gray;
-  border-radius: 2px;
-  width: 250px;
-  height: 300px;
-`;
-
-const StyledInput = styled(Input)`
-  max-width: 200px;
-  margin-bottom: 8px;
-`;
-
-const StyledInputPassword = styled(Input.Password)`
-  width: 200px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 200px;
-  margin: 8px 0;
-  color: gray;
-`;
-
-const StyledLinksWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const StyledErrorSpanEmail = styled.span`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 50px;
-  font-family: Arial, 'sans-serif';
-  color: #ff5f5d;
-  font-size: 20px;
-`;
-
-const StyledErrorSpanPass = styled.span`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  bottom: 25px;
-  font-family: Arial, 'sans-serif';
-  color: #ff5f5d;
-  font-size: 20px;
-`;
+import Preloader from 'ui/components/Preloader/Preloader';
+import {
+  StyledButton,
+  StyledErrorSpanEmail,
+  StyledErrorSpanPass,
+  StyledInput,
+  StyledInputPassword,
+  StyledLinksWrapper,
+  StyledLoginContainer,
+  StyledLoginForm,
+} from './Login.styles';
 
 type LoginFormTypes = {
   email: string;

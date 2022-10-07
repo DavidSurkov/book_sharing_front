@@ -1,19 +1,6 @@
 import React from 'react';
-import { Button, Drawer, Input, Space, Radio, InputNumber } from 'antd';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 5px;
-  gap: 20px;
-  font-size: 18px;
-`;
-const Block = styled.div<{ maxWidth?: string }>`
-  text-align: center;
-  max-width: ${(props) => props.maxWidth};
-`;
+import { Button, Drawer, Input, InputNumber, Radio, Space } from 'antd';
+import { Block, Container } from './SearchDrawer.styles';
 
 interface ISearchDrawer {
   isOpen: boolean;

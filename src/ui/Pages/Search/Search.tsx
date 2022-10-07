@@ -1,12 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useGetAllBooksQuery } from 'dal/book/bookAPI';
 import { SearchDrawer } from '../../components/SearchDrawer/SearchDrawer';
 import { useToggle } from '../../../utils/hooks/use-toggle.hook';
+import { Container } from './Search.styles';
 
-const Container = styled.div`
-  padding: 10px;
-`;
 export const Search = () => {
   const { data, error } = useGetAllBooksQuery();
   const { modal: drawer, toggleModal: toggleDrawer } = useToggle(true);

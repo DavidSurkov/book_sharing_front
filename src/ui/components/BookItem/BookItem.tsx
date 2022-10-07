@@ -1,12 +1,6 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { IGenre } from 'dal/book/bookAPI';
-
-const Block = styled.div`
-  padding: 20px;
-  border: 1px solid black;
-  background-color: white;
-`;
+import { Block } from './BookItem.styles';
 
 interface IBookItem {
   id: number;

@@ -19,21 +19,6 @@ interface ISignInReq {
   password: string;
 }
 
-// const baseQuery = fetchBaseQuery({ baseUrl: 'http://localhost:4000' });
-// const reAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
-//   let result = await baseQuery(args, api, extraOptions);
-//   if (result.error && result.error.status === 401) {
-//     const refreshResult = await baseQuery(`/${AUTH}/${REFRESH}`, api, extraOptions);
-//     if (refreshResult.data) {
-//       api.dispatch(signInUser(refreshResult.data as PayloadType));
-//       result = await baseQuery(args, api, extraOptions);
-//     } else {
-//       api.dispatch(signOutUser);
-//     }
-//   }
-//   return result;
-// };
-
 export const authApi = createApi({
   reducerPath: 'auth',
   baseQuery: fetchBaseQuery({
