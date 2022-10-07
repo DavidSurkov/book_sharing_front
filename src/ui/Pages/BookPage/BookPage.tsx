@@ -21,6 +21,13 @@ const BookPage = () => {
 
   return (
     <div>
+      <div>
+        <span>{data && data.title}</span>
+        <span>{data && data.author}</span>
+        <span>{data && data.year}</span>
+        <span>{data && data.description}</span>
+      </div>
+      {/*<img src={data.poster} alt="poster" />*/}
       <button disabled={userId !== data?.user.id} onClick={deleteBookHandler}>
         Delete book
       </button>

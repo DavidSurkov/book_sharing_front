@@ -14,7 +14,7 @@ const initialState: UserStateType = {
   email: undefined,
 };
 
-type PayloadType = {
+export type PayloadType = {
   id: number;
   name: string;
   email: string;

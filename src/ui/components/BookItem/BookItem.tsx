@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-import { IGenre } from '../../../dal/book/bookAPI';
+import { IGenre } from 'dal/book/bookAPI';
 
 const Block = styled.div`
   padding: 20px;

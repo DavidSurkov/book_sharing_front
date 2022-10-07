@@ -7,8 +7,6 @@ import { Button, Form, Input, notification } from 'antd';
 import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'dal/auth/authAPI';
 import Preloader from '../../components/Preloader/Preloader';
-import { signInUser } from '../../../bll/user-slice';
-import { useAppDispatch } from '../../../hooks/hooks';
 
 const StyledLoginContainer = styled.div`
   width: 100vw;
@@ -82,15 +80,13 @@ type NotificationType = 'success' | 'error';
 
 const Login: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const [signIn, { error, isLoading, isSuccess, isError, data: response }] = useSignInMutation();
+  const [signIn, { error, isLoading, isSuccess, isError }] = useSignInMutation();
 
   useEffect(() => {
     if (isError) {
       openLoginNotification('error', error);
     }
-    if (isSuccess && response) {
-      dispatch(signInUser(response));
+    if (isSuccess) {
       openLoginNotification('success');
       navigate(HOME);
     }

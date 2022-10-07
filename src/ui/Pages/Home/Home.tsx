@@ -3,6 +3,7 @@ import { useGetAllBooksQuery } from '../../../dal/book/bookAPI';
 import styled from 'styled-components';
 import BookItem from '../../components/BookItem/BookItem';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../hooks/hooks';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -15,7 +16,8 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-  const { data, error } = useGetAllBooksQuery();
+  const isAuthorised = useAppSelector((state) => state.user.isAuthorised);
+  const { data } = useGetAllBooksQuery(undefined, { skip: !isAuthorised });
   const navigate = useNavigate();
 
   const onClickHandler = (id: number) => {
