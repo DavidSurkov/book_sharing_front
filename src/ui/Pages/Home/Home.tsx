@@ -9,7 +9,21 @@ import { useToggleDrawer } from '../../../utils/hooks/use-toggle-drawer.hook';
 
 const Home = () => {
   const isAuthorised = useAppSelector((state) => state.user.isAuthorised);
-  const { data } = useGetAllBooksQuery(undefined, { skip: !isAuthorised });
+
+  const { author, genre, title, year } = useAppSelector((state) => state.filter);
+
+  const filterOptions = { author, genre, title, year };
+
+  const queryString = Object.entries(filterOptions)
+    .map(([key, value]) => {
+      if (value) {
+        return `${key}=${value}&`;
+      }
+    })
+    .join('')
+    .slice(0, -1);
+
+  const { data, refetch } = useGetAllBooksQuery(queryString, { skip: !isAuthorised });
   const { drawer, toggleDrawer } = useToggleDrawer();
   const navigate = useNavigate();
 
@@ -19,7 +33,13 @@ const Home = () => {
 
   return (
     <Container>
-      <SearchDrawer isOpen={drawer} onClose={toggleDrawer} />
+      <SearchDrawer
+        isOpen={drawer}
+        onClose={toggleDrawer}
+        onSubmit={() => {
+          refetch();
+        }}
+      />
       {data?.length &&
         data.map((book, index) => {
           return <BookItem onClick={onClickHandler} {...book} key={index} posterUrl={book.poster.url} />;

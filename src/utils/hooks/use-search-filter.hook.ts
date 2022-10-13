@@ -15,10 +15,10 @@ export const useSearchFilterHook = () => {
     dispatch(setAuthor(e.currentTarget.value));
   };
 
-  const setYearHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (typeof e.currentTarget.value === 'number') {
-      dispatch(setYear(e.currentTarget.value));
-    }
+  const setYearHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const regExp = new RegExp('^[0-9]*$');
+    const value = e.currentTarget.value;
+    regExp.test(value) && (await dispatch(setYear(+value)));
   };
 
   const setGenreHandler = (e: RadioChangeEvent) => {

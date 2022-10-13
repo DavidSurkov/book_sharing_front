@@ -30,7 +30,6 @@ const filter = createSlice({
       return { ...state, genre: payload };
     },
     setYear: (state, { payload }: PayloadAction<number | undefined>): InitStateType => {
-      console.log(state.year);
       return { ...state, year: payload };
     },
     setAuthor: (state, { payload }: PayloadAction<string | undefined>): InitStateType => {

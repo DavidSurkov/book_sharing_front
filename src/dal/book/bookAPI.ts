@@ -46,6 +46,7 @@ export const bookAPI = createApi({
         method: 'GET',
       }),
     }),
+
     postBook: build.mutation<IBook, FormData>({
       query: (arg) => ({
         url: `/${BOOK}`,
@@ -54,13 +55,15 @@ export const bookAPI = createApi({
       }),
       invalidatesTags: () => ['Book'],
     }),
-    getAllBooks: build.query<IBook[], void>({
-      query: () => ({
-        url: `/${BOOK}/${ALL}`,
+
+    getAllBooks: build.query<IBook[], string>({
+      query: (arg) => ({
+        url: `/${BOOK}/${ALL}?${arg}`,
         method: 'GET',
       }),
       providesTags: () => ['Book'],
     }),
+
     getOneBook: build.query<IBook, string | undefined>({
       query: (id) => ({
         url: `/${BOOK}/${id}`,
@@ -68,6 +71,7 @@ export const bookAPI = createApi({
       }),
       providesTags: () => ['Book'],
     }),
+
     deleteBook: build.mutation<void, number | undefined>({
       query: (id) => ({
         url: `/${BOOK}/${id}`,

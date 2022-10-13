@@ -39,3 +39,17 @@ export const searchAPI = createApi({
     }),
   }),
 });
+
+export const { useFilteredTitleQuery, useFilteredAuthorQuery, useFilteredGenreQuery, useFilteredYearQuery } = searchAPI;
+
+('http://lockalhost:4000/book/all?title=hulk&author=thor&genre=1&year=2012');
+const obj = { name: undefined, age: undefined, fName: undefined };
+
+const arr = Object.entries(obj);
+
+const nevArr = arr.map(([key, value]) => {
+  if (value) {
+    return `${key}=${value}&`;
+  }
+});
+const result = nevArr.join('').slice(0, -1);

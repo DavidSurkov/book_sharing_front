@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Drawer, Radio, Space } from 'antd';
 import {
   Block,
@@ -15,6 +15,7 @@ import { useAllGenreQuery } from '../../../dal/book/bookAPI';
 interface ISearchDrawer {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: () => void;
 }
 
 const style: React.CSSProperties = {
@@ -23,11 +24,15 @@ const style: React.CSSProperties = {
   flexDirection: 'column',
 };
 
-export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose }) => {
+export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose, onSubmit }) => {
   const { title, author, year, genre, setGenreHandler, setAuthorHandler, setTitleHandler, setYearHandler } =
     useSearchFilterHook();
 
   const { data: genres } = useAllGenreQuery();
+
+  useEffect(() => {
+    console.log(year);
+  }, [year]);
 
   return (
     <Drawer
@@ -39,7 +44,9 @@ export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose }) => {
       width="30vw"
       extra={
         <Space>
-          <SubmitButton type={'primary'}>Submit</SubmitButton>
+          <SubmitButton onClick={onSubmit} type={'primary'}>
+            Submit
+          </SubmitButton>
         </Space>
       }
     >
