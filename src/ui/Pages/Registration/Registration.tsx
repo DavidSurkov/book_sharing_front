@@ -130,7 +130,7 @@ const Registration: FC = () => {
       {errors.confirmPassword && (
         <StyledErrorSpanConfirmPass>{errors.confirmPassword?.message}</StyledErrorSpanConfirmPass>
       )}
-      {isLoading && <Preloader />}
+      {isLoading && <Preloader isAbsolute={'absolute'} bottom={'25px'} left={'25px'} />}
     </StyledRegistrationContainer>
   );
 };

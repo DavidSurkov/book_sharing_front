@@ -13,9 +13,15 @@ import {
   StyledTitle,
 } from './Preloader.styles';
 
-const Preloader: FC = () => {
+interface IPreloader {
+  isAbsolute: string | null;
+  bottom: string | null;
+  left: string | null;
+}
+
+const Preloader: FC<IPreloader> = ({ isAbsolute, bottom, left }) => {
   return (
-    <StyledPreloader>
+    <StyledPreloader isAbsolute={isAbsolute} bottom={bottom} left={left}>
       <StyledLine1></StyledLine1>
       <StyledLine2></StyledLine2>
       <StyledLine3></StyledLine3>

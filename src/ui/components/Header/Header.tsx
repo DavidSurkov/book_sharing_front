@@ -1,35 +1,45 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from 'antd';
 import { useSignOutMutation } from 'dal/auth/authAPI';
-import { LOGIN, SEARCH } from 'utils/constants/RoutesPathConstants';
-import ModalWindow from '../ModalWindow/ModalWindow';
-import { signOutUser } from '../../../bll/user-slice';
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { SearchBlock, StyledHeader } from './Header.styles';
+import { LOGIN } from 'utils/constants/RoutesPathConstants';
+import ModalWindow from 'ui/components/ModalWindow/ModalWindow';
+import { useAppSelector } from 'dal/hooks/hooks';
+import {
+  LogoutButton,
+  ModalButton,
+  SearchBlock,
+  StyledHeader,
+  StyledParagraph,
+  UserInfoWrapper,
+} from './Header.styles';
+import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
+import { useToggleDrawer } from '../../../utils/hooks/use-toggle-drawer.hook';
 
 const Header = () => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const userName = useAppSelector((state) => state.user);
-  const [signOut] = useSignOutMutation();
+  const [signOut, { isSuccess, isError, error }] = useSignOutMutation();
+  const { toggleDrawer } = useToggleDrawer();
+  useNotificationAndNavigate(isSuccess, isError, error, '', LOGIN);
 
   const logOutHandler = () => {
     signOut();
-    dispatch(signOutUser());
-    navigate(LOGIN);
   };
+
+  const openSearchHandler = () => {
+    toggleDrawer();
+  };
+
   return (
     <StyledHeader>
-      <SearchBlock to={SEARCH}>Search</SearchBlock>
-      <ModalWindow />
-      <div>
-        <p>{userName.name}</p>
-        <p>{userName.email}</p>
-      </div>
-      <Button style={{ marginLeft: '15px' }} onClick={logOutHandler}>
-        Logout
-      </Button>
+      <SearchBlock onClick={openSearchHandler}>Search</SearchBlock>
+      <ModalButton>
+        <ModalWindow />
+      </ModalButton>
+
+      <UserInfoWrapper>
+        <StyledParagraph>{userName.name}</StyledParagraph>
+        {/*<StyledParagraph>{userName.email}</StyledParagraph>*/}
+      </UserInfoWrapper>
+      <LogoutButton onClick={logOutHandler}>Logout</LogoutButton>
     </StyledHeader>
   );
 };

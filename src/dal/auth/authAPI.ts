@@ -19,7 +19,7 @@ interface ISignInReq {
   password: string;
 }
 
-export const authApi = createApi({
+export const authAPI = createApi({
   reducerPath: 'auth',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.BACKEND_URL || 'http://localhost:4000',
@@ -61,6 +61,12 @@ export const authApi = createApi({
         url: `/${AUTH}/${LOGOUT}`,
         method: 'POST',
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(signOutUser());
+        } catch {}
+      },
     }),
 
     authorise: build.query<IUser, void>({
@@ -90,4 +96,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useSignUpMutation, useSignInMutation, useSignOutMutation, useAuthoriseQuery } = authApi;
+export const { useSignUpMutation, useSignInMutation, useSignOutMutation, useAuthoriseQuery } = authAPI;

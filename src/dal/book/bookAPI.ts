@@ -61,7 +61,7 @@ export const bookAPI = createApi({
       }),
       providesTags: () => ['Book'],
     }),
-    geyOneBook: build.query<IBook, string | undefined>({
+    getOneBook: build.query<IBook, string | undefined>({
       query: (id) => ({
         url: `/${BOOK}/${id}`,
         method: 'GET',
@@ -78,5 +78,5 @@ export const bookAPI = createApi({
   }),
 });
 
-export const { useAllGenreQuery, usePostBookMutation, useGetAllBooksQuery, useGeyOneBookQuery, useDeleteBookMutation } =
+export const { useAllGenreQuery, usePostBookMutation, useGetAllBooksQuery, useGetOneBookQuery, useDeleteBookMutation } =
   bookAPI;

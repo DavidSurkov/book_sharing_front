@@ -1,5 +1,15 @@
-import { Input, Select } from 'antd';
+import { Button, Input, Select } from 'antd';
 import styled from 'styled-components';
+
+export const ToggleModalButton = styled(Button)`
+  background-color: #90e95c;
+  color: white;
+  border: none;
+  &:hover {
+    background-color: #90e95c;
+    color: black;
+  }
+`;
 
 export const StyledGenreDateWrapper = styled.div`
   display: flex;
@@ -12,7 +22,7 @@ export const StyledUploadWrapper = styled.div`
   justify-content: space-around;
   margin: 20px auto;
   width: 100%;
-  //background-color: gray;
+  //background-co  lor: gray;
 `;
 
 export const StyledUploadFileWrapper = styled.div`

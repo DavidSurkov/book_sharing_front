@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { IGenre } from 'dal/book/bookAPI';
-import { Block } from './BookItem.styles';
+import { Block, BookDescription, BookPoster } from './BookItem.styles';
 
 interface IBookItem {
   id: number;
@@ -18,7 +18,7 @@ const BookItem: FC<IBookItem> = ({ onClick, id, title, description, author, post
     <Block onClick={() => onClick(id)}>
       <div>{title}</div>
       <div>
-        <img style={{ width: '200px', height: '200px' }} src={posterUrl} alt="poster" />
+        <BookPoster src={posterUrl} alt="Book poster" />
       </div>
       <div>{year}</div>
       <div>
@@ -27,7 +27,7 @@ const BookItem: FC<IBookItem> = ({ onClick, id, title, description, author, post
         })}
       </div>
       <div>{author}</div>
-      <div>{description}</div>
+      <BookDescription>{description}</BookDescription>
     </Block>
   );
 };

@@ -1,11 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 
-export const StyledPreloader = styled.div`
+export const StyledPreloader = styled.div<{ isAbsolute: string | null; bottom: string | null; left: string | null }>`
   text-align: center;
   z-index: 1;
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
+  position: ${({ isAbsolute }) => isAbsolute};
+  bottom: ${({ bottom }) => bottom};
+  left: ${({ left }) => left};
 `;
 
 export const StyledTitle = styled.div`

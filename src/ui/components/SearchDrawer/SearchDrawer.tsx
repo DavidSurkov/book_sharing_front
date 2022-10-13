@@ -1,6 +1,16 @@
 import React from 'react';
-import { Button, Drawer, Input, InputNumber, Radio, Space } from 'antd';
-import { Block, Container } from './SearchDrawer.styles';
+import { Drawer, Radio, Space } from 'antd';
+import {
+  Block,
+  Container,
+  StyledInput,
+  StyledInputNumber,
+  StyledLabel,
+  StyledRadioButton,
+  SubmitButton,
+} from './SearchDrawer.styles';
+import { useSearchFilterHook } from '../../../utils/hooks/use-search-filter.hook';
+import { useAllGenreQuery } from '../../../dal/book/bookAPI';
 
 interface ISearchDrawer {
   isOpen: boolean;
@@ -8,12 +18,17 @@ interface ISearchDrawer {
 }
 
 const style: React.CSSProperties = {
-  backgroundColor: '#e9eeef',
+  backgroundColor: '#9391f2',
   display: 'flex',
   flexDirection: 'column',
 };
 
 export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose }) => {
+  const { title, author, year, genre, setGenreHandler, setAuthorHandler, setTitleHandler, setYearHandler } =
+    useSearchFilterHook();
+
+  const { data: genres } = useAllGenreQuery();
+
   return (
     <Drawer
       placement="left"
@@ -24,41 +39,33 @@ export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose }) => {
       width="30vw"
       extra={
         <Space>
-          <Button type={'primary'}>Submit</Button>
+          <SubmitButton type={'primary'}>Submit</SubmitButton>
         </Space>
       }
     >
       <Container>
         <Block>
-          <label>Title</label>
-          <Input type="text" />
+          <StyledLabel>Title</StyledLabel>
+          <StyledInput type="text" onChange={setTitleHandler} value={title} />
         </Block>
         <Block maxWidth={'400px'}>
-          <label>Genre</label>
-          <Radio.Group defaultValue={'a'}>
-            <Radio.Button value={'a'}>Some</Radio.Button>
-            <Radio.Button value={'b'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
-            <Radio.Button value={'c'}>Some</Radio.Button>
+          <StyledLabel>Genre</StyledLabel>
+          <Radio.Group onChange={setGenreHandler} value={genre}>
+            {genres &&
+              genres.map((item) => (
+                <StyledRadioButton key={item.id} value={item.id}>
+                  {item.name}
+                </StyledRadioButton>
+              ))}
           </Radio.Group>
         </Block>
         <Block>
-          <label>Year</label>
-          <InputNumber type="number" />
+          <StyledLabel>Year</StyledLabel>
+          <StyledInputNumber onChange={setYearHandler} value={year} />
         </Block>
         <Block>
-          <label>Author</label>
-          <Input type="text" />
+          <StyledLabel>Author</StyledLabel>
+          <StyledInput type="text" onChange={setAuthorHandler} value={author} />
         </Block>
       </Container>
     </Drawer>

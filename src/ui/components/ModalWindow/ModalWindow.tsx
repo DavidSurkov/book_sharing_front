@@ -1,4 +1,4 @@
-import { Button, Modal, Select } from 'antd';
+import { Modal, Select } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
 import { useAllGenreQuery, usePostBookMutation } from '../../../dal/book/bookAPI';
 import { useToggle } from '../../../utils/hooks/use-toggle.hook';
@@ -13,8 +13,11 @@ import {
   StyledUploadFileWrapper,
   StyledUploadPosterWrapper,
   StyledUploadWrapper,
+  ToggleModalButton,
 } from './ModalWindow.styles';
 import { StyledError } from 'ui/common-styles/common.styles';
+import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
+import Preloader from '../Preloader/Preloader';
 
 type AddBookFormType = {
   title: string;
@@ -34,7 +37,9 @@ const ModalWindow: FC = () => {
   const [posterError, setPosterError] = useState(false);
 
   const { data: genres } = useAllGenreQuery();
-  const [postBook, { isError, isSuccess, isLoading }] = usePostBookMutation();
+  const [postBook, { isError, isSuccess, error, isLoading }] = usePostBookMutation();
+
+  useNotificationAndNavigate(isSuccess, isError, error);
 
   const {
     setValue,
@@ -52,8 +57,12 @@ const ModalWindow: FC = () => {
     setValue('poster', posterFile);
   }, [posterFile]);
 
+  useEffect(() => {
+    isSuccess && toggleModal();
+  }, [isSuccess]);
+
   const formData = new FormData();
-  const onSubmit = (data: AddBookFormType) => {
+  const onSubmit = async (data: AddBookFormType) => {
     if (genres) {
       const genre = genres.find((e) => {
         return e.id === data.genre;
@@ -74,16 +83,16 @@ const ModalWindow: FC = () => {
       genre && formData.append('genres[0]', `{"id": ${genre.id}, "name": "${genre.name}"}`);
       formData.append('book', data.book instanceof File ? data.book : `${data.book}`);
       formData.append('poster', data.poster instanceof File ? data.poster : `${data.poster}`);
-      postBook(formData);
+      await postBook(formData);
       isSuccess && toggleModal();
     }
   };
 
   return (
     <>
-      <Button type="primary" onClick={toggleModal}>
+      <ToggleModalButton type="primary" onClick={toggleModal}>
         Add new book
-      </Button>
+      </ToggleModalButton>
       <Modal
         title="Add new book"
         centered
@@ -92,6 +101,7 @@ const ModalWindow: FC = () => {
         onCancel={toggleModal}
         width={500}
       >
+        {isLoading && <Preloader isAbsolute={null} bottom={null} left={null} />}
         <form>
           <Controller
             render={({ field }) => (

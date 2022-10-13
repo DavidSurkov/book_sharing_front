@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { FC } from 'react';
+import { NavLink } from 'react-router-dom';
 import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
-import { Form, notification } from 'antd';
+import { Form } from 'antd';
 import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'dal/auth/authAPI';
 import Preloader from 'ui/components/Preloader/Preloader';
@@ -16,34 +16,16 @@ import {
   StyledLoginContainer,
   StyledLoginForm,
 } from './Login.styles';
+import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
 
 type LoginFormTypes = {
   email: string;
   password: string;
 };
 
-type NotificationType = 'success' | 'error';
-
 const Login: FC = () => {
-  const navigate = useNavigate();
   const [signIn, { error, isLoading, isSuccess, isError }] = useSignInMutation();
-
-  useEffect(() => {
-    if (isError) {
-      openLoginNotification('error', error);
-    }
-    if (isSuccess) {
-      openLoginNotification('success');
-      navigate(HOME);
-    }
-  }, [isError, isSuccess]);
-
-  const openLoginNotification = (type: NotificationType, error?: any) => {
-    notification[type]({
-      message: `${type === 'success' ? 'Success' : 'Error'}`,
-      description: `${type === 'success' ? '' : error.data?.message}`,
-    });
-  };
+  useNotificationAndNavigate(isSuccess, isError, error, 'Hello', HOME);
 
   const {
     control,
@@ -95,7 +77,7 @@ const Login: FC = () => {
 
       {errors.email && <StyledErrorSpanEmail>{errors.email?.message}</StyledErrorSpanEmail>}
       {errors.password && <StyledErrorSpanPass>{errors.password?.message}</StyledErrorSpanPass>}
-      {isLoading && <Preloader />}
+      {isLoading && <Preloader left={'25px'} bottom={'25px'} isAbsolute={'absolute'} />}
     </StyledLoginContainer>
   );
 };
