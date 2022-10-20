@@ -4,7 +4,6 @@ import { Button } from 'antd';
 export const BookInfoContainer = styled.div`
   max-width: 1200px;
   height: calc(100vh - 60px);
-  background-color: white;
   margin: 0 auto;
   padding: 70px;
 `;
@@ -17,7 +16,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const BookPoster = styled.img`
-  width: 350px;
+  width: 450px;
   margin: 15px auto;
 `;
 

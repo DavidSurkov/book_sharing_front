@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ALL, BOOK, GENRE } from '../../utils/constants/endpointConstants';
+import { ALL, BOOK, GENRE, SEARCH } from 'utils/constants/endpointConstants';
 import { IUser } from '../auth/authAPI';
 
 export interface IGenre {
@@ -58,7 +58,7 @@ export const bookAPI = createApi({
 
     getAllBooks: build.query<IBook[], string>({
       query: (arg) => ({
-        url: `/${BOOK}/${ALL}?${arg}`,
+        url: `/${BOOK}/${SEARCH}?${arg}`,
         method: 'GET',
       }),
       providesTags: () => ['Book'],

@@ -60,6 +60,7 @@ const ModalWindow: FC = () => {
   useEffect(() => {
     isSuccess && toggleModal();
   }, [isSuccess]);
+  const maxPikedDate = new Date().toISOString().split('T')[0];
 
   const formData = new FormData();
   const onSubmit = async (data: AddBookFormType) => {
@@ -151,7 +152,7 @@ const ModalWindow: FC = () => {
             <div>
               <input
                 type="date"
-                max={new Date().toDateString()}
+                max={maxPikedDate}
                 {...register('year', {
                   required: true,
                 })}

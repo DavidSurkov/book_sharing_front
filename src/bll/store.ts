@@ -4,7 +4,6 @@ import { userSlice } from 'bll/user-slice';
 import { authAPI } from 'dal/auth/authAPI';
 import { bookAPI } from 'dal/book/bookAPI';
 import { filterSlice } from './filter-slice';
-import { searchAPI } from 'dal/search/searchAPI';
 
 export const store = configureStore({
   reducer: {
@@ -12,14 +11,9 @@ export const store = configureStore({
     filter: filterSlice,
     [authAPI.reducerPath]: authAPI.reducer,
     [bookAPI.reducerPath]: bookAPI.reducer,
-    [searchAPI.reducerPath]: searchAPI.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(authAPI.middleware)
-      .concat(bookAPI.middleware)
-      .concat(searchAPI.middleware)
-      .prepend(thunk),
+    getDefaultMiddleware().concat(authAPI.middleware).concat(bookAPI.middleware).prepend(thunk),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

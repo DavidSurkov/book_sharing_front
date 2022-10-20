@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Drawer, Radio, Space } from 'antd';
 import {
   Block,
@@ -30,9 +30,9 @@ export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose, onSubmi
 
   const { data: genres } = useAllGenreQuery();
 
-  useEffect(() => {
-    console.log(year);
-  }, [year]);
+  // useEffect(() => {
+  //   console.log(year);
+  // }, [year]);
 
   return (
     <Drawer
@@ -53,7 +53,7 @@ export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose, onSubmi
       <Container>
         <Block>
           <StyledLabel>Title</StyledLabel>
-          <StyledInput type="text" onChange={setTitleHandler} value={title} />
+          <StyledInput type="text" onChange={setTitleHandler} value={title?.trim()} />
         </Block>
         <Block maxWidth={'400px'}>
           <StyledLabel>Genre</StyledLabel>
@@ -72,7 +72,7 @@ export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose, onSubmi
         </Block>
         <Block>
           <StyledLabel>Author</StyledLabel>
-          <StyledInput type="text" onChange={setAuthorHandler} value={author} />
+          <StyledInput type="text" onChange={setAuthorHandler} value={author?.trim()} />
         </Block>
       </Container>
     </Drawer>

@@ -5,9 +5,10 @@ export const ToggleModalButton = styled(Button)`
   background-color: #90e95c;
   color: white;
   border: none;
-  &:hover {
+  &:hover,
+  &:enabled {
     background-color: #90e95c;
-    color: black;
+    color: white;
   }
 `;
 

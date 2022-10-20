@@ -9,16 +9,22 @@ import {
   SearchBlock,
   StyledHeader,
   StyledParagraph,
+  StyledSearchingIcon,
+  StyledSearchingInput,
   UserInfoWrapper,
 } from './Header.styles';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
 import { useToggleDrawer } from '../../../utils/hooks/use-toggle-drawer.hook';
+import { useSearchFilterHook } from 'utils/hooks/use-search-filter.hook';
+import { useQueryString } from '../../../utils/hooks/use-query-string.hook';
 
 const Header = () => {
   const userName = useAppSelector((state) => state.user);
+  const { refetch } = useQueryString();
   const [signOut, { isSuccess, isError, error }] = useSignOutMutation();
   const { toggleDrawer } = useToggleDrawer();
   useNotificationAndNavigate(isSuccess, isError, error, '', LOGIN);
+  const { title, setTitleHandler } = useSearchFilterHook();
 
   const logOutHandler = () => {
     signOut();
@@ -30,6 +36,8 @@ const Header = () => {
 
   return (
     <StyledHeader>
+      <StyledSearchingInput placeholder="Book name" type="text" onChange={setTitleHandler} value={title} />
+      <StyledSearchingIcon onClick={() => refetch()} />
       <SearchBlock onClick={openSearchHandler}>Search</SearchBlock>
       <ModalButton>
         <ModalWindow />
