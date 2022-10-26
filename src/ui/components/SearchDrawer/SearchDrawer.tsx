@@ -30,10 +30,6 @@ export const SearchDrawer: React.FC<ISearchDrawer> = ({ isOpen, onClose, onSubmi
 
   const { data: genres } = useAllGenreQuery();
 
-  // useEffect(() => {
-  //   console.log(year);
-  // }, [year]);
-
   return (
     <Drawer
       placement="left"

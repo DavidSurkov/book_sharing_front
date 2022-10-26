@@ -1,22 +1,27 @@
 import React, { FC } from 'react';
-import { NavLink } from 'react-router-dom';
 import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
 import { Form } from 'antd';
 import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'dal/auth/authAPI';
 import Preloader from 'ui/components/Preloader/Preloader';
+import { NewUserWrapper, StyledLinksWrapper } from './Login.styles';
+import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
+// @ts-ignore
+import logo from '../../../utils/assets/logo.png';
 import {
   StyledButton,
+  StyledContainer,
   StyledErrorSpanEmail,
   StyledErrorSpanPass,
+  StyledForm,
   StyledInput,
   StyledInputPassword,
-  StyledLinksWrapper,
-  StyledLoginContainer,
-  StyledLoginForm,
-} from './Login.styles';
-import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
+  StyledLogo,
+  StyledNavLink,
+  StyledSpan,
+  StyledTitle,
+} from 'ui/common-styles/common.styles';
 
 type LoginFormTypes = {
   email: string;
@@ -38,9 +43,11 @@ const Login: FC = () => {
   };
 
   return (
-    <StyledLoginContainer>
+    <StyledContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledLoginForm>
+        <StyledForm>
+          <StyledLogo src={logo} alt="Book Sharing logo" />
+          <StyledTitle> Book Sharing </StyledTitle>
           <Controller
             render={({ field }) => <StyledInput {...field} placeholder="Email" />}
             name="email"
@@ -66,19 +73,19 @@ const Login: FC = () => {
             <StyledButton htmlType="submit">Sign in</StyledButton>
           </Form.Item>
           <StyledLinksWrapper>
-            <div>
-              <span>New user?</span>
-              <NavLink to={REGISTRATION}>Sign up</NavLink>
-            </div>
-            <NavLink to={FORGOT_PASSWORD}> Forgot password</NavLink>
+            <NewUserWrapper>
+              <StyledSpan>New user?</StyledSpan>
+              <StyledNavLink to={REGISTRATION}>Sign up</StyledNavLink>
+            </NewUserWrapper>
+            <StyledNavLink to={FORGOT_PASSWORD}> Forgot password</StyledNavLink>
           </StyledLinksWrapper>
-        </StyledLoginForm>
+        </StyledForm>
       </form>
 
       {errors.email && <StyledErrorSpanEmail>{errors.email?.message}</StyledErrorSpanEmail>}
       {errors.password && <StyledErrorSpanPass>{errors.password?.message}</StyledErrorSpanPass>}
       {isLoading && <Preloader left={'25px'} bottom={'25px'} isAbsolute={'absolute'} />}
-    </StyledLoginContainer>
+    </StyledContainer>
   );
 };
 

@@ -18,6 +18,8 @@ import {
 import { StyledError } from 'ui/common-styles/common.styles';
 import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
 import Preloader from '../Preloader/Preloader';
+import { useNavigate } from 'react-router-dom';
+import { HOME } from '../../../utils/constants/RoutesPathConstants';
 
 type AddBookFormType = {
   title: string;
@@ -30,6 +32,7 @@ type AddBookFormType = {
 };
 
 const ModalWindow: FC = () => {
+  const navigate = useNavigate();
   const { modal, toggleModal } = useToggle();
   const [bookFile, setBookFile] = useState<File | null>();
   const [posterFile, setPosterFile] = useState<File | null>();
@@ -87,13 +90,12 @@ const ModalWindow: FC = () => {
       await postBook(formData);
       isSuccess && toggleModal();
     }
+    navigate(HOME);
   };
 
   return (
     <>
-      <ToggleModalButton type="primary" onClick={toggleModal}>
-        Add new book
-      </ToggleModalButton>
+      <ToggleModalButton onClick={toggleModal}>Add new book</ToggleModalButton>
       <Modal
         title="Add new book"
         centered

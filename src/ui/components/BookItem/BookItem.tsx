@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { IGenre } from 'dal/book/bookAPI';
-import { Block, BookDescription, BookPoster } from './BookItem.styles';
+import { Block, BookAuthor, BookPoster, BookTitle, PosterWrapper, Year } from './BookItem.styles';
 
 interface IBookItem {
   id: number;
@@ -16,18 +16,20 @@ interface IBookItem {
 const BookItem: FC<IBookItem> = ({ onClick, id, title, description, author, posterUrl, year, genres }) => {
   return (
     <Block onClick={() => onClick(id)}>
-      <div>{title}</div>
-      <div>
+      <BookTitle>{title}</BookTitle>
+      <PosterWrapper>
         <BookPoster src={posterUrl} alt="Book poster" />
-      </div>
-      <div>{year}</div>
-      <div>
-        {genres.map((genre) => {
-          return <p key={genre.id}>{genre.name}</p>;
-        })}
-      </div>
-      <div>{author}</div>
-      <BookDescription>{description}</BookDescription>
+      </PosterWrapper>
+      <Year>{year}</Year>
+      {/*<div>*/}
+      {/*  {genres.map((genre) => {*/}
+      {/*    return <p key={genre.id}>{genre.name}</p>;*/}
+      {/*  })}*/}
+      {/*</div>*/}
+      <BookAuthor>
+        <p>Written by:</p> {author}
+      </BookAuthor>
+      {/*<BookDescription>{description}</BookDescription>*/}
     </Block>
   );
 };

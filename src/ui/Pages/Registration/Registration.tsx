@@ -2,22 +2,28 @@ import React, { FC, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/constants/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Form, notification, Space } from 'antd';
+import { notification, Space } from 'antd';
 import { LOGIN } from '../../../utils/constants/RoutesPathConstants';
 import { useSignUpMutation } from '../../../dal/auth/authAPI';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Preloader from '../../components/Preloader/Preloader';
+import { StyledUserOutlined } from './Registration.styles';
 import {
   StyledButton,
+  StyledContainer,
   StyledErrorSpanConfirmPass,
   StyledErrorSpanEmail,
   StyledErrorSpanPass,
+  StyledForm,
   StyledInput,
   StyledInputPassword,
-  StyledRegisterForm,
-  StyledRegistrationContainer,
-  StyledUserOutlined,
-} from './Registration.styles';
+  StyledLogo,
+  StyledNavLink,
+  StyledSpan,
+  StyledTitle,
+} from '../../common-styles/common.styles';
+//@ts-ignore
+import logo from '../../../utils/assets/logo.png';
 
 type RegistrationTypes = {
   email: string;
@@ -61,9 +67,11 @@ const Registration: FC = () => {
   };
 
   return (
-    <StyledRegistrationContainer>
+    <StyledContainer>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledRegisterForm>
+        <StyledForm>
+          <StyledLogo src={logo} alt="Book Sharing logo" />
+          <StyledTitle> Book Sharing </StyledTitle>
           <Controller
             render={({ field }) => <StyledInput {...field} placeholder="User name" prefix={<StyledUserOutlined />} />}
             name="name"
@@ -116,14 +124,12 @@ const Registration: FC = () => {
               }}
             />
           </Space>
-          <Form.Item>
-            <StyledButton htmlType="submit">Sign up</StyledButton>
-          </Form.Item>
+          <StyledButton htmlType="submit">Sign up</StyledButton>
           <div>
-            <span>Already have an account?</span>
-            <NavLink to={LOGIN}>Login</NavLink>
+            <StyledSpan>Already have an account?</StyledSpan>
+            <StyledNavLink to={LOGIN}>Login</StyledNavLink>
           </div>
-        </StyledRegisterForm>
+        </StyledForm>
       </form>
       {errors.email && <StyledErrorSpanEmail>{errors.email?.message}</StyledErrorSpanEmail>}
       {errors.password && <StyledErrorSpanPass>{errors.password?.message}</StyledErrorSpanPass>}
@@ -131,7 +137,7 @@ const Registration: FC = () => {
         <StyledErrorSpanConfirmPass>{errors.confirmPassword?.message}</StyledErrorSpanConfirmPass>
       )}
       {isLoading && <Preloader isAbsolute={'absolute'} bottom={'25px'} left={'25px'} />}
-    </StyledRegistrationContainer>
+    </StyledContainer>
   );
 };
 

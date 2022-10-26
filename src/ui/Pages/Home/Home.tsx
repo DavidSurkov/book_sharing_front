@@ -1,7 +1,7 @@
 import React from 'react';
 import BookItem from 'ui/components/BookItem/BookItem';
 import { useNavigate } from 'react-router-dom';
-import { Container } from './Home.styles';
+import { Container, RoundGreen, RoundYellow } from './Home.styles';
 import { SearchDrawer } from 'ui/components/SearchDrawer/SearchDrawer';
 import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useQueryString } from 'utils/hooks/use-query-string.hook';
@@ -24,11 +24,13 @@ const Home = () => {
           refetch();
         }}
       />
+      <RoundGreen />
       {data?.length
         ? data.map((book, index) => {
             return <BookItem onClick={onClickHandler} {...book} key={index} posterUrl={book.poster.url} />;
           })
         : ''}
+      <RoundYellow />
     </Container>
   );
 };

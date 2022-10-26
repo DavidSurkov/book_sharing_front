@@ -2,13 +2,16 @@ import { Button, Input, Select } from 'antd';
 import styled from 'styled-components';
 
 export const ToggleModalButton = styled(Button)`
-  background-color: #90e95c;
-  color: white;
+  width: 120px;
+  margin: 0 10px;
+  font-weight: bold;
+  border-radius: 24px;
+  height: 32px;
+  outline: none;
   border: none;
-  &:hover,
   &:enabled {
-    background-color: #90e95c;
-    color: white;
+    background: #bb6bd9;
+    color: #f5f5fa;
   }
 `;
 
@@ -23,7 +26,6 @@ export const StyledUploadWrapper = styled.div`
   justify-content: space-around;
   margin: 20px auto;
   width: 100%;
-  //background-co  lor: gray;
 `;
 
 export const StyledUploadFileWrapper = styled.div`
