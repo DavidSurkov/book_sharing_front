@@ -1,8 +1,8 @@
 import React from 'react';
-import { useSignOutMutation } from 'dal/auth/authAPI';
+import { useSignOutMutation } from 'services/auth/authAPI';
 import { HOME, LOGIN } from 'utils/constants/RoutesPathConstants';
 import ModalWindow from 'ui/components/ModalWindow/ModalWindow';
-import { useAppSelector } from 'dal/hooks/hooks';
+import { useAppSelector } from 'services/hooks/hooks';
 import {
   HeaderTitle,
   LogoutIcon,
@@ -31,7 +31,7 @@ const Header = () => {
   const navigate = useNavigate();
   const userName = useAppSelector((state) => state.user);
   const { refetch } = useQueryString();
-  const { isAuthorised } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [signOut, { isSuccess, isError, error }] = useSignOutMutation();
   const { toggleDrawer } = useToggleDrawer();
   useNotificationAndNavigate(isSuccess, isError, error, '', LOGIN);
@@ -55,7 +55,7 @@ const Header = () => {
     navigate(HOME);
   };
 
-  if (!isAuthorised) {
+  if (!isLoggedIn) {
     return (
       <StyledHeader>
         <LogoWrapper onClick={clickLogoHandler}>

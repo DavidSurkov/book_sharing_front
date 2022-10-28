@@ -10,7 +10,7 @@ import {
   SubmitButton,
 } from './SearchDrawer.styles';
 import { useSearchFilterHook } from '../../../utils/hooks/use-search-filter.hook';
-import { useAllGenreQuery } from '../../../dal/book/bookAPI';
+import { useAllGenreQuery } from '../../../services/book/bookAPI';
 
 interface ISearchDrawer {
   isOpen: boolean;

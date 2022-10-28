@@ -1,6 +1,6 @@
 import { Modal, Select } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
-import { useAllGenreQuery, usePostBookMutation } from '../../../dal/book/bookAPI';
+import { useAllGenreQuery, usePostBookMutation } from '../../../services/book/bookAPI';
 import { useToggle } from '../../../utils/hooks/use-toggle.hook';
 import { Controller, useForm } from 'react-hook-form';
 import UploadBook from '../UploadFile/UploadBook';

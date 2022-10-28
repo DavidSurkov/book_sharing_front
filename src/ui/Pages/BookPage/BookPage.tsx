@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useDeleteBookMutation, useGetOneBookQuery } from 'dal/book/bookAPI';
-import { useAppSelector } from 'dal/hooks/hooks';
+import { useDeleteBookMutation, useGetOneBookQuery } from 'services/book/bookAPI';
+import { useAppSelector } from 'services/hooks/hooks';
 import {
   BookInfo,
   BookInfoContainer,

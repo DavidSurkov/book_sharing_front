@@ -1,10 +1,10 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from '../../../utils/constants/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { notification, Space } from 'antd';
 import { LOGIN } from '../../../utils/constants/RoutesPathConstants';
-import { useSignUpMutation } from '../../../dal/auth/authAPI';
+import { useSignUpMutation } from '../../../services/auth/authAPI';
 import { useNavigate } from 'react-router-dom';
 import Preloader from '../../components/Preloader/Preloader';
 import { StyledUserOutlined } from './Registration.styles';
@@ -34,7 +34,7 @@ type RegistrationTypes = {
 
 type NotificationType = 'success' | 'error';
 
-const Registration: FC = () => {
+const Registration = () => {
   const navigate = useNavigate();
   const [signUp, { data, error, isLoading, isSuccess, isError }] = useSignUpMutation();
 

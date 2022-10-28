@@ -1,5 +1,5 @@
-import { useGetAllBooksQuery } from 'dal/book/bookAPI';
-import { useAppSelector } from 'dal/hooks/hooks';
+import { useGetAllBooksQuery } from 'services/book/bookAPI';
+import { useAppSelector } from 'services/hooks/hooks';
 
 export const useQueryString = () => {
   const isAuthorised = useAppSelector((state) => state.user.isAuthorised);

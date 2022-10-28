@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from 'dal/hooks/hooks';
-import { toggle } from 'bll/filter-slice';
+import { useAppDispatch, useAppSelector } from 'services/hooks/hooks';
+import { toggle } from 'store/filter-slice';
 
 export const useToggleDrawer = () => {
   const dispatch = useAppDispatch();

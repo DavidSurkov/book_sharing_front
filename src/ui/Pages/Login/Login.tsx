@@ -1,9 +1,8 @@
-import React, { FC } from 'react';
 import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
 import { Form } from 'antd';
 import { emailRegExp } from 'utils/constants/regExp';
-import { useSignInMutation } from 'dal/auth/authAPI';
+import { useSignInMutation } from 'services/auth/authAPI';
 import Preloader from 'ui/components/Preloader/Preloader';
 import { NewUserWrapper, StyledLinksWrapper } from './Login.styles';
 import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
@@ -28,7 +27,7 @@ type LoginFormTypes = {
   password: string;
 };
 
-const Login: FC = () => {
+const Login = () => {
   const [signIn, { error, isLoading, isSuccess, isError }] = useSignInMutation();
   useNotificationAndNavigate(isSuccess, isError, error, 'Hello', HOME);
 

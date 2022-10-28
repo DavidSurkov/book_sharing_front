@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from 'dal/hooks/hooks';
+import { useAppDispatch, useAppSelector } from 'services/hooks/hooks';
 import { ChangeEvent } from 'react';
-import { setAuthor, setGenre, setTitle, setYear } from 'bll/filter-slice';
+import { setAuthor, setGenre, setTitle, setYear } from 'store/filter-slice';
 import { RadioChangeEvent } from 'antd';
 
 export const useSearchFilterHook = () => {

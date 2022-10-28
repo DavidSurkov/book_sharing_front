@@ -1,7 +1,7 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { UNAUTHORISED_ERROR_STATUS } from '../../utils/constants/errorConatants';
 import { AUTH, CHECK, REFRESH } from '../../utils/constants/endpointConstants';
-import { signInUser, signOutUser } from '../../bll/user-slice';
+import { signInUser, signOutUser } from '../../store/user-slice';
 import { IUser } from '../auth/authAPI';
 
 const baseQuery = fetchBaseQuery({
@@ -25,10 +25,8 @@ const baseQueryWithReauthorise: BaseQueryFn<string | FetchArgs, unknown, FetchBa
     if (!refreshResult.error) {
       const checkResult = await baseQuery(`/${AUTH}/${CHECK}`, api, extraOptions);
       await baseQuery(arg, api, extraOptions);
-      console.log('signIn');
       api.dispatch(signInUser(checkResult.data as IUser));
     } else {
-      console.log('signOut');
       api.dispatch(signOutUser());
     }
   }

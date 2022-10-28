@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { IGenre } from 'dal/book/bookAPI';
+import { IGenre } from 'services/book/bookAPI';
 import { Block, BookAuthor, BookPoster, BookTitle, PosterWrapper, Year } from './BookItem.styles';
 
 interface IBookItem {

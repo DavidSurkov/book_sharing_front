@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { userSlice } from 'bll/user-slice';
+import { userSlice } from 'store/user-slice';
 import { filterSlice } from './filter-slice';
-import { apiSlice } from '../dal/api/api-slice';
+import { apiSlice } from '../services/api/api-slice';
 
 export const store = configureStore({
   reducer: {
