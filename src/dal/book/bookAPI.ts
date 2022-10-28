@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ALL, BOOK, GENRE, SEARCH } from 'utils/constants/endpointConstants';
 import { IUser } from '../auth/authAPI';
+import { apiSlice } from '../api/api-slice';
 
 export interface IGenre {
   id: number;
@@ -27,18 +27,7 @@ interface IBook {
   user: IUser;
 }
 
-export const bookAPI = createApi({
-  reducerPath: 'book',
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.BACKEND_URL || 'http://localhost:4000',
-    credentials: 'include',
-    prepareHeaders: (headers) => {
-      headers.set('Access-Control-Allow-Origin', process.env.BACKEND_URL || 'http://localhost:4000');
-      return headers;
-    },
-    mode: 'cors',
-  }),
-  tagTypes: ['Book'],
+export const bookAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     allGenre: build.query<IGenre[], void>({
       query: () => ({

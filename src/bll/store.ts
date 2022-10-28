@@ -1,19 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { userSlice } from 'bll/user-slice';
-import { authAPI } from 'dal/auth/authAPI';
-import { bookAPI } from 'dal/book/bookAPI';
 import { filterSlice } from './filter-slice';
+import { apiSlice } from '../dal/api/api-slice';
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
     filter: filterSlice,
-    [authAPI.reducerPath]: authAPI.reducer,
-    [bookAPI.reducerPath]: bookAPI.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authAPI.middleware).concat(bookAPI.middleware).prepend(thunk),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware).prepend(thunk),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

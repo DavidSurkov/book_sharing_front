@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { AUTH, CHECK, LOGIN, LOGOUT, REFRESH, REGISTER } from 'utils/constants/endpointConstants';
+import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from 'utils/constants/endpointConstants';
 import { signInUser, signOutUser } from 'bll/user-slice';
+import { apiSlice } from '../api/api-slice';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 interface ISignUpReq {
   name: string;
@@ -19,17 +20,7 @@ interface ISignInReq {
   password: string;
 }
 
-export const authAPI = createApi({
-  reducerPath: 'auth',
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.BACKEND_URL || 'http://localhost:4000',
-    credentials: 'include',
-    prepareHeaders: (headers) => {
-      headers.set('Access-Control-Allow-Origin', process.env.BACKEND_URL || 'http://localhost:4000');
-      return headers;
-    },
-    mode: 'cors',
-  }),
+export const authAPI = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     signUp: build.mutation<IUser, ISignUpReq>({
       query: (body) => ({
@@ -71,26 +62,12 @@ export const authAPI = createApi({
 
     authorise: build.query<IUser, void>({
       queryFn: async (args, { dispatch }, extraOptions, baseQuery) => {
-        try {
-          let result = await baseQuery(`/${AUTH}/${CHECK}`);
-          if (result.error && result.error.status === 401) {
-            const refreshResult = await baseQuery(`/${AUTH}/${REFRESH}`);
-            if (!refreshResult.error) {
-              result = await baseQuery(`/${AUTH}/${CHECK}`);
-              dispatch(signInUser(result.data as IUser));
-              return { data: result.data as IUser };
-            } else {
-              dispatch(signOutUser());
-              return { error: refreshResult.error };
-            }
-          } else {
-            dispatch(signInUser(result.data as IUser));
-            return { data: result.data as IUser };
-          }
-        } catch (error) {
-          dispatch(signOutUser());
-          return { error: error as FetchBaseQueryError };
+        const result = await baseQuery(`/${AUTH}/${CHECK}`);
+        if ('error' in result) {
+          return { error: result.error as FetchBaseQueryError };
         }
+        dispatch(signInUser(result.data as IUser));
+        return { data: result.data as IUser };
       },
     }),
   }),

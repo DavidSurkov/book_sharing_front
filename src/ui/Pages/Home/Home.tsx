@@ -1,10 +1,11 @@
 import React from 'react';
 import BookItem from 'ui/components/BookItem/BookItem';
 import { useNavigate } from 'react-router-dom';
-import { Container, RoundGreen, RoundYellow } from './Home.styles';
 import { SearchDrawer } from 'ui/components/SearchDrawer/SearchDrawer';
 import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useQueryString } from 'utils/hooks/use-query-string.hook';
+import { StyledContainer } from '../../common-styles/common.styles';
+import { Container } from './Home.styles';
 
 const Home = () => {
   const { data, refetch } = useQueryString();
@@ -16,22 +17,22 @@ const Home = () => {
   };
 
   return (
-    <Container>
-      <SearchDrawer
-        isOpen={drawer}
-        onClose={toggleDrawer}
-        onSubmit={() => {
-          refetch();
-        }}
-      />
-      <RoundGreen />
-      {data?.length
-        ? data.map((book, index) => {
-            return <BookItem onClick={onClickHandler} {...book} key={index} posterUrl={book.poster.url} />;
-          })
-        : ''}
-      <RoundYellow />
-    </Container>
+    <StyledContainer>
+      <Container>
+        <SearchDrawer
+          isOpen={drawer}
+          onClose={toggleDrawer}
+          onSubmit={() => {
+            refetch();
+          }}
+        />
+        {data?.length
+          ? data.map((book, index) => {
+              return <BookItem onClick={onClickHandler} {...book} key={index} posterUrl={book.poster.url} />;
+            })
+          : ''}
+      </Container>
+    </StyledContainer>
   );
 };
 

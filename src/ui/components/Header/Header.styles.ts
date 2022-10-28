@@ -12,16 +12,23 @@ export const StyledHeader = styled.header`
 `;
 
 export const LogoWrapper = styled.div`
-  width: 56%;
+  display: flex;
+  align-items: center;
+  //background-color: red;
+  width: 74%;
   height: 34px;
+`;
+
+export const HeaderTitle = styled.h2`
+  font-weight: 600;
+  color: #231d4f;
+  margin-left: 5px;
+  cursor: pointer;
 `;
 
 export const StyledImage = styled.img`
   width: 35px;
-
-  &:hover {
-    transform: scale(0.95);
-  }
+  cursor: pointer;
 `;
 
 // export const StyledSearchingInput = styled(Input)`
@@ -70,18 +77,6 @@ export const LogoutIcon = styled.img`
 
   &:active {
     transform: scale(0.95);
-  }
-`;
-
-export const ModalButton = styled.div`
-  margin-right: 10px;
-
-  &:checked,
-  &:focus,
-  &:enabled,
-  &:active {
-    color: #020301;
-    background-color: #90e95c;
   }
 `;
 
