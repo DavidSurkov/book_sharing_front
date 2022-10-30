@@ -20,6 +20,7 @@ import {
   StyledTitle,
 } from 'ui/common-styles/common.styles';
 import { Button } from 'ui/components/Button/Button';
+import { ShiftedElement } from 'ui/components/ShiftedElement/ShiftedElement';
 
 type LoginFormTypes = {
   email: string;
@@ -66,9 +67,9 @@ const Login = () => {
               minLength: { message: 'Password should be more then 8 char', value: 8 },
             }}
           />
-          <Button isShifted disabled={!!errors.email || !!errors.password}>
-            Sign in
-          </Button>
+          <ShiftedElement isShifted={!!errors.email || !!errors.password} initialTop={'85%'} initialLeft={'50px'}>
+            <Button disabled={!!errors.email || !!errors.password}>Sign in</Button>
+          </ShiftedElement>
           <StyledLinksWrapper>
             <NewUserWrapper>
               <StyledSpan>New user?</StyledSpan>

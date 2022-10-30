@@ -11,8 +11,7 @@ export interface IStyledCustomButton {
   hoverBackgroundColor?: string;
   hoverBorderRadius?: string;
   disabled?: boolean;
-  top?: string;
-  left?: string;
+  disabledBackgroundColor?: string;
 }
 
 export const StyledCustomButton = styled.button<IStyledCustomButton>`
@@ -25,26 +24,17 @@ export const StyledCustomButton = styled.button<IStyledCustomButton>`
   border-radius: ${({ borderRadius }) => borderRadius || '24px'};
   padding: 0.4em 1em;
   border: none;
-  position: absolute;
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
   transition: 0.1s ease-in-out;
   &:hover {
     border: none;
     color: ${({ hoverTextColor }) => hoverTextColor || '#ffffff'};
     background-color: ${({ hoverBackgroundColor }) => hoverBackgroundColor || '#a847cc'};
-    border-radius: ${({ hoverBorderRadius }) => hoverBorderRadius || '24px'};
-    position: absolute;
-    top: ${({ top }) => top};
-    left: ${({ left }) => left};
+    border-radius: ${({ borderRadius }) => borderRadius || '24px'};
   }
   &:disabled {
     border: none;
-    color: ${({ hoverTextColor }) => hoverTextColor || '#ffffff'};
-    background-color: ${({ hoverBackgroundColor }) => hoverBackgroundColor || 'black'};
-    border-radius: ${({ hoverBorderRadius }) => hoverBorderRadius || '24px'};
-    position: absolute;
-    top: ${({ top }) => top};
-    left: ${({ left }) => left};
+    color: ${({ textColor }) => textColor || '#ffffff'};
+    background-color: ${({ disabledBackgroundColor }) => disabledBackgroundColor || 'rgba(168,71,204,0.3)'};
+    border-radius: ${({ borderRadius }) => borderRadius || '24px'};
   }
 `;
