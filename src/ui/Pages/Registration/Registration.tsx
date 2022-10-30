@@ -22,7 +22,6 @@ import {
   StyledSpan,
   StyledTitle,
 } from '../../common-styles/common.styles';
-//@ts-ignore
 import logo from '../../../utils/assets/logo.png';
 
 type RegistrationTypes = {
@@ -36,7 +35,7 @@ type NotificationType = 'success' | 'error';
 
 const Registration = () => {
   const navigate = useNavigate();
-  const [signUp, { data, error, isLoading, isSuccess, isError }] = useSignUpMutation();
+  const [signUp, { error, isLoading, isSuccess, isError }] = useSignUpMutation();
 
   const openRegisterNotification = (type: NotificationType, error?: any) => {
     notification[type]({

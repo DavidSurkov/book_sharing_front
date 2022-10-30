@@ -1,4 +1,4 @@
-import { Modal, Select } from 'antd';
+import { Input, Modal, Select } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
 import { useAllGenreQuery, usePostBookMutation } from '../../../services/book/bookAPI';
 import { useToggle } from '../../../utils/hooks/use-toggle.hook';
@@ -6,10 +6,8 @@ import { Controller, useForm } from 'react-hook-form';
 import UploadBook from '../UploadFile/UploadBook';
 import UploadPoster from '../UploadPoster/UploadPoster';
 import {
+  ElementErrorWrapper,
   StyledGenreDateWrapper,
-  StyledInput,
-  StyledSelect,
-  StyledTextArea,
   StyledUploadFileWrapper,
   StyledUploadPosterWrapper,
   StyledUploadWrapper,
@@ -106,42 +104,46 @@ const ModalWindow: FC = () => {
       >
         {isLoading && <Preloader isAbsolute={null} bottom={null} left={null} />}
         <form>
-          <Controller
-            render={({ field }) => (
-              <StyledInput required placeholder="Book title" {...field} isError={!!errors.title} />
-            )}
-            name="title"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: 'Title is required', value: true },
-            }}
-          />
+          <ElementErrorWrapper isError={!!errors.title}>
+            <Controller
+              render={({ field }) => <Input required placeholder="Book title" {...field} />}
+              name="title"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { message: 'Title is required', value: true },
+              }}
+            />
+          </ElementErrorWrapper>
           {errors.title && <StyledError>Book title is required!</StyledError>}
 
-          <Controller
-            render={({ field }) => <StyledInput required placeholder="Author" {...field} isError={!!errors.author} />}
-            name="author"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: 'Author is required', value: true },
-            }}
-          />
+          <ElementErrorWrapper isError={!!errors.author}>
+            <Controller
+              render={({ field }) => <Input required placeholder="Author" {...field} />}
+              name="author"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: { message: 'Author is required', value: true },
+              }}
+            />
+          </ElementErrorWrapper>
           {errors.author && <StyledError>Author is required!</StyledError>}
 
           <StyledGenreDateWrapper>
             <div>
               <Controller
                 render={({ field }) => (
-                  <StyledSelect isError={!!errors.genre} {...field} placeholder={'Genre'}>
-                    {genres &&
-                      genres.map((i) => (
-                        <Select.Option key={i.id} value={i.id}>
-                          {i.name}
-                        </Select.Option>
-                      ))}
-                  </StyledSelect>
+                  <ElementErrorWrapper isError={!!errors.genre}>
+                    <Select {...field} placeholder={'Genre'}>
+                      {genres &&
+                        genres.map((i) => (
+                          <Select.Option key={i.id} value={i.id}>
+                            {i.name}
+                          </Select.Option>
+                        ))}
+                    </Select>
+                  </ElementErrorWrapper>
                 )}
                 name="genre"
                 control={control}
@@ -149,6 +151,7 @@ const ModalWindow: FC = () => {
                   required: { message: 'Genre is required', value: true },
                 }}
               />
+
               {errors.genre && <StyledError>Genre is required!</StyledError>}
             </div>
             <div>
@@ -163,23 +166,18 @@ const ModalWindow: FC = () => {
             </div>
           </StyledGenreDateWrapper>
 
-          <Controller
-            render={({ field }) => (
-              <StyledTextArea
-                isError={!!errors.description}
-                {...field}
-                placeholder={'Description'}
-                showCount
-                maxLength={250}
-                rows={3}
-              />
-            )}
-            name={'description'}
-            control={control}
-            rules={{
-              required: { message: 'Genre is required', value: true },
-            }}
-          />
+          <ElementErrorWrapper isError={!!errors.description}>
+            <Controller
+              render={({ field }) => (
+                <Input.TextArea {...field} placeholder={'Description'} showCount maxLength={250} rows={3} />
+              )}
+              name={'description'}
+              control={control}
+              rules={{
+                required: { message: 'Genre is required', value: true },
+              }}
+            />
+          </ElementErrorWrapper>
           {errors.description && <StyledError>Description is required!</StyledError>}
 
           <StyledUploadWrapper>

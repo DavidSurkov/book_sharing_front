@@ -5,8 +5,7 @@ import { useSignInMutation } from 'services/auth/authAPI';
 import Preloader from 'ui/components/Preloader/Preloader';
 import { NewUserWrapper, StyledLinksWrapper } from './Login.styles';
 import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
-// @ts-ignore
-import logo from '../../../utils/assets/logo.png';
+import logo from 'utils/assets/logo.png';
 import {
   StyledContainer,
   StyledErrorSpanEmail,

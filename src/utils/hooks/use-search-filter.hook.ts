@@ -2,13 +2,17 @@ import { useAppDispatch, useAppSelector } from 'services/hooks/hooks';
 import { ChangeEvent } from 'react';
 import { setAuthor, setGenre, setTitle, setYear } from 'store/filter-slice';
 import { RadioChangeEvent } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { HOME } from 'utils/constants/RoutesPathConstants';
 
 export const useSearchFilterHook = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { title, author, year, genre } = useAppSelector((state) => state.filter);
 
   const setTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setTitle(e.currentTarget.value));
+    navigate(HOME);
   };
 
   const setAuthorHandler = (e: ChangeEvent<HTMLInputElement>) => {

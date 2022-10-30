@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { SearchOutlined } from '@ant-design/icons';
 
 export const StyledHeader = styled.header`
   display: flex;
@@ -14,7 +13,6 @@ export const StyledHeader = styled.header`
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  //background-color: red;
   width: 74%;
   height: 34px;
 `;
@@ -26,45 +24,12 @@ export const HeaderTitle = styled.h2`
   cursor: pointer;
 `;
 
-export const StyledImage = styled.img`
+export const StyledLogoImage = styled.img`
   width: 35px;
   cursor: pointer;
 `;
 
-// export const StyledSearchingInput = styled(Input)`
-//   transition: width 0.1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
-//   border-radius: 50px;
-//   height: 32px;
-//   outline: none;
-//   padding: 0 40px 0 16px;
-//   position: relative;
-//   text-overflow: ellipsis;
-//   white-space: nowrap;
-//   background-color: rgb(255, 255, 255);
-//   width: 27%;
-//   &:hover,
-//   &:enabled {
-//     border: none;
-//   }
-// `;
-
-export const StyledSearchingIcon = styled(SearchOutlined)`
-  color: #231d4f;
-  font-size: 18px;
-  top: 7px;
-  right: 32px;
-  position: relative;
-
-  &:hover {
-    color: #bb6bd9;
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-`;
-
-export const LogoutIcon = styled.img`
+export const StyledIcon = styled.img`
   width: 25px;
   margin: 0 10px;
   filter: brightness(0) saturate(100%) invert(11%) sepia(29%) saturate(3540%) hue-rotate(228deg) brightness(94%)
@@ -86,7 +51,6 @@ export const UserInfoWrapper = styled.div`
   padding: 7px;
   color: #231d4f;
   font-weight: bold;
-  //border: 1px solid rgba(0, 0, 0, 0.35);
   border-radius: 25px;
 `;
 

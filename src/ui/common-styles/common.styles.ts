@@ -38,8 +38,8 @@ export const StyledTitle = styled.h1`
   color: #231d4f;
 `;
 
-export const StyledInput = styled(Input)<{ maxWidth?: string }>`
-  max-width: ${({ maxWidth }) => maxWidth || '200px'};
+export const StyledInput = styled(Input)<{ maximumWidth?: string }>`
+  max-width: ${({ maximumWidth }) => maximumWidth || '200px'};
   margin-bottom: 8px;
   transition: width 0.1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
   border-radius: 50px;
