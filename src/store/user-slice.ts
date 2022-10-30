@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 type UserStateType = {
   isAuthorised: boolean;
@@ -20,7 +22,7 @@ export type PayloadType = {
   email: string;
 };
 
-const appSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
@@ -31,5 +33,6 @@ const appSlice = createSlice({
   },
 });
 
-export const userSlice = appSlice.reducer;
-export const { signInUser, signOutUser } = appSlice.actions;
+export const userPersistedReducer = persistReducer({ key: 'user', storage }, userSlice.reducer);
+
+export const { signInUser, signOutUser } = userSlice.actions;

@@ -25,13 +25,12 @@ import logo from 'utils/assets/logo.png';
 import outIcon from 'utils/assets/icons/out.svg';
 // @ts-ignore
 import filter from 'utils/assets/icons/filter.svg';
-import { useAuth } from 'utils/hooks/use-auth.hook';
 
 const Header = () => {
   const navigate = useNavigate();
   const userName = useAppSelector((state) => state.user);
   const { refetch } = useQueryString();
-  const { isLoggedIn } = useAuth();
+  const isAuthorised = useAppSelector((state) => state.user.isAuthorised);
   const [signOut, { isSuccess, isError, error }] = useSignOutMutation();
   const { toggleDrawer } = useToggleDrawer();
   useNotificationAndNavigate(isSuccess, isError, error, '', LOGIN);
@@ -55,7 +54,7 @@ const Header = () => {
     navigate(HOME);
   };
 
-  if (!isLoggedIn) {
+  if (!isAuthorised) {
     return (
       <StyledHeader>
         <LogoWrapper onClick={clickLogoHandler}>
@@ -72,7 +71,7 @@ const Header = () => {
         <StyledImage src={logo} alt="books" />
         <HeaderTitle>Book Sharing</HeaderTitle>
       </LogoWrapper>
-      <StyledInput placeholder="Book name" type="text" onChange={setTitleHandler} value={title} />
+      <StyledInput maxWidth={'400px'} placeholder="Book name" type="text" onChange={setTitleHandler} value={title} />
       <StyledSearchingIcon onClick={searchingIconHandler} />
       <LogoutIcon src={filter} alt="Book filtration" onClick={openSearchHandler} />
       <ModalWindow />

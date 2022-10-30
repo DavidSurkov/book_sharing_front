@@ -2,6 +2,7 @@ import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from 'utils/constants/endpointCo
 import { signInUser, signOutUser } from 'store/user-slice';
 import { apiSlice } from '../api/api-slice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { userPersistedStore } from '../../store/store';
 
 interface ISignUpReq {
   name: string;
@@ -56,6 +57,7 @@ export const authAPI = apiSlice.injectEndpoints({
         try {
           await queryFulfilled;
           dispatch(signOutUser());
+          await userPersistedStore.purge();
         } catch {}
       },
     }),

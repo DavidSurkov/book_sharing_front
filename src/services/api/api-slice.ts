@@ -19,12 +19,12 @@ const baseQueryWithReauthorise: BaseQueryFn<string | FetchArgs, unknown, FetchBa
   api,
   extraOptions,
 ) => {
-  const result = await baseQuery(arg, api, extraOptions);
+  let result = await baseQuery(arg, api, extraOptions);
   if (result.error && result.error.status === UNAUTHORISED_ERROR_STATUS) {
     const refreshResult = await baseQuery(`/${AUTH}/${REFRESH}`, api, extraOptions);
     if (!refreshResult.error) {
       const checkResult = await baseQuery(`/${AUTH}/${CHECK}`, api, extraOptions);
-      await baseQuery(arg, api, extraOptions);
+      result = await baseQuery(arg, api, extraOptions);
       api.dispatch(signInUser(checkResult.data as IUser));
     } else {
       api.dispatch(signOutUser());
