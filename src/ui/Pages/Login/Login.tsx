@@ -1,6 +1,5 @@
 import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
-import { Form } from 'antd';
 import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'services/auth/authAPI';
 import Preloader from 'ui/components/Preloader/Preloader';
@@ -9,7 +8,6 @@ import { useNotificationAndNavigate } from '../../../utils/hooks/use-notificatio
 // @ts-ignore
 import logo from '../../../utils/assets/logo.png';
 import {
-  StyledButton,
   StyledContainer,
   StyledErrorSpanEmail,
   StyledErrorSpanPass,
@@ -21,6 +19,8 @@ import {
   StyledSpan,
   StyledTitle,
 } from 'ui/common-styles/common.styles';
+import { Button } from 'ui/components/Button/Button';
+import { ShiftedElement } from 'ui/components/ShiftedElement/ShiftedElement';
 
 type LoginFormTypes = {
   email: string;
@@ -43,7 +43,7 @@ const Login = () => {
 
   return (
     <StyledContainer>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ position: 'relative' }}>
         <StyledForm>
           <StyledLogo src={logo} alt="Book Sharing logo" />
           <StyledTitle> Book Sharing </StyledTitle>
@@ -67,10 +67,9 @@ const Login = () => {
               minLength: { message: 'Password should be more then 8 char', value: 8 },
             }}
           />
-
-          <Form.Item>
-            <StyledButton htmlType="submit">Sign in</StyledButton>
-          </Form.Item>
+          <ShiftedElement isShifted={!!errors.email || !!errors.password} initialTop={'85%'} initialLeft={'50px'}>
+            <Button disabled={!!errors.email || !!errors.password}>Sign in</Button>
+          </ShiftedElement>
           <StyledLinksWrapper>
             <NewUserWrapper>
               <StyledSpan>New user?</StyledSpan>
