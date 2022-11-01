@@ -8,9 +8,10 @@ import {
   StyledLabel,
   StyledRadioButton,
   SubmitButton,
-} from './SearchDrawer.styles';
-import { useSearchFilterHook } from '../../../utils/hooks/use-search-filter.hook';
-import { useAllGenreQuery } from '../../../services/book/bookAPI';
+} from 'ui/components/SearchDrawer/SearchDrawer.styles';
+import { useSearchFilterHook } from 'utils/hooks/use-search-filter.hook';
+import { useAllGenreQuery } from 'services/book/bookAPI';
+import { SKIN_COLOR } from 'utils/constants/colorConstants';
 
 interface ISearchDrawer {
   isOpen: boolean;
@@ -19,7 +20,7 @@ interface ISearchDrawer {
 }
 
 const style: React.CSSProperties = {
-  backgroundColor: '#9391f2',
+  backgroundColor: `${SKIN_COLOR}`,
   display: 'flex',
   flexDirection: 'column',
 };

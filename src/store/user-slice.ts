@@ -9,6 +9,12 @@ type UserStateType = {
   email: undefined | string;
 };
 
+export type PayloadType = {
+  id: number;
+  name: string;
+  email: string;
+};
+
 const initialState: UserStateType = {
   isAuthorised: false,
   id: undefined,
@@ -16,14 +22,10 @@ const initialState: UserStateType = {
   email: undefined,
 };
 
-export type PayloadType = {
-  id: number;
-  name: string;
-  email: string;
-};
+const USER = 'user';
 
 const userSlice = createSlice({
-  name: 'user',
+  name: USER,
   initialState,
   reducers: {
     signInUser: (state, { payload }: PayloadAction<PayloadType>): UserStateType => {
@@ -33,6 +35,6 @@ const userSlice = createSlice({
   },
 });
 
-export const userPersistedReducer = persistReducer({ key: 'user', storage }, userSlice.reducer);
+export const userPersistedReducer = persistReducer({ key: USER, storage }, userSlice.reducer);
 
 export const { signInUser, signOutUser } = userSlice.actions;

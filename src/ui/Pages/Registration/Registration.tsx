@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { emailRegExp } from '../../../utils/constants/regExp';
+import { emailRegExp } from 'utils/constants/regExp';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { notification, Space } from 'antd';
-import { LOGIN } from '../../../utils/constants/RoutesPathConstants';
-import { useSignUpMutation } from '../../../services/auth/authAPI';
-import { useNavigate } from 'react-router-dom';
-import Preloader from '../../components/Preloader/Preloader';
-import { StyledUserOutlined } from './Registration.styles';
+import { Space } from 'antd';
+import { LOGIN } from 'utils/constants/RoutesPathConstants';
+import { useSignUpMutation } from 'services/auth/authAPI';
+import Preloader from 'ui/components/Preloader/Preloader';
+import { StyledUserOutlined } from 'ui/Pages/Registration/Registration.styles';
 import {
   StyledButton,
   StyledContainer,
@@ -21,8 +20,16 @@ import {
   StyledNavLink,
   StyledSpan,
   StyledTitle,
-} from '../../common-styles/common.styles';
-import logo from '../../../utils/assets/logo.png';
+} from 'ui/common-styles/common.styles';
+import logo from 'utils/assets/logo.png';
+import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
+import {
+  NOT_CORRECT_EMAIL,
+  REQUIRED_EMAIL,
+  REQUIRED_NAME,
+  REQUIRED_PASSWORD,
+  TO_SHORT_PASSWORD,
+} from 'utils/constants/errorConatants';
 
 type RegistrationTypes = {
   email: string;
@@ -31,28 +38,9 @@ type RegistrationTypes = {
   confirmPassword: string;
 };
 
-type NotificationType = 'success' | 'error';
-
 const Registration = () => {
-  const navigate = useNavigate();
   const [signUp, { error, isLoading, isSuccess, isError }] = useSignUpMutation();
-
-  const openRegisterNotification = (type: NotificationType, error?: any) => {
-    notification[type]({
-      message: `${type === 'success' ? 'Success' : 'Error'}`,
-      description: `${type === 'success' ? '' : error.data?.message}`,
-    });
-  };
-
-  useEffect(() => {
-    if (isError) {
-      openRegisterNotification('error', error);
-    }
-    if (isSuccess) {
-      openRegisterNotification('success');
-      navigate(LOGIN);
-    }
-  }, [isError, isSuccess]);
+  useNotificationAndNavigate(isSuccess, isError, error, undefined, LOGIN);
 
   const {
     control,
@@ -77,7 +65,7 @@ const Registration = () => {
             control={control}
             defaultValue=""
             rules={{
-              required: { message: 'Name is required', value: true },
+              required: { message: REQUIRED_NAME, value: true },
             }}
           />
 
@@ -87,8 +75,8 @@ const Registration = () => {
             control={control}
             defaultValue=""
             rules={{
-              required: { message: 'Email is required', value: true },
-              pattern: { message: 'Email is not correct', value: emailRegExp },
+              required: { message: REQUIRED_EMAIL, value: true },
+              pattern: { message: NOT_CORRECT_EMAIL, value: emailRegExp },
             }}
           />
 
@@ -99,8 +87,8 @@ const Registration = () => {
               control={control}
               defaultValue=""
               rules={{
-                required: { message: 'Password is required', value: true },
-                minLength: { message: 'Password should be more then 4 char', value: 4 },
+                required: { message: REQUIRED_PASSWORD, value: true },
+                minLength: { message: TO_SHORT_PASSWORD, value: 8 },
               }}
             />
             <Controller

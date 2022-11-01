@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
+import { DARK_BLUE, PINK_NORMAL, WHITE } from 'utils/constants/colorConstants';
 
 export const BookInfoContainer = styled.div`
   max-width: 1200px;
@@ -11,7 +12,7 @@ export const BookInfoContainer = styled.div`
 export const InfoWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #025373;
+  background-color: ${DARK_BLUE};
   flex-direction: column;
 `;
 
@@ -28,21 +29,20 @@ export const BookInfo = styled.span`
 `;
 
 export const DeleteButton = styled(Button)`
-  background-color: #f28705;
-  color: white;
+  background-color: ${PINK_NORMAL};
+  color: ${WHITE};
   border: none;
   margin-bottom: 15px;
   &:hover,
   &:active {
-    background-color: #f2a285;
-    color: white;
+    background-color: ${PINK_NORMAL};
+    color: ${WHITE};
   }
 `;
 
 export const DescriptionSector = styled.div`
   width: 70%;
-  background-color: #027353;
-  border: 1px solid red;
+  background-color: ${WHITE};
   margin: 15px auto;
   padding: 10px;
 `;

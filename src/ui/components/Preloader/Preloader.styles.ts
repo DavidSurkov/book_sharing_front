@@ -1,6 +1,13 @@
 import styled, { keyframes } from 'styled-components';
+import { DARK_BLUE } from 'utils/constants/colorConstants';
 
-export const StyledPreloader = styled.div<{ isAbsolute: string | null; bottom: string | null; left: string | null }>`
+interface IStyledPreloader {
+  isAbsolute: string | null;
+  bottom: string | null;
+  left: string | null;
+}
+
+export const StyledPreloader = styled.div<IStyledPreloader>`
   text-align: center;
   z-index: 1;
   position: ${({ isAbsolute }) => isAbsolute};
@@ -9,11 +16,11 @@ export const StyledPreloader = styled.div<{ isAbsolute: string | null; bottom: s
 `;
 
 export const StyledTitle = styled.div`
-  color: black;
+  color: ${DARK_BLUE};
   margin-left: 5px;
   text-transform: uppercase;
-  font-family: 'Arial', sans-serif;
-  font-size: 12px;
+  font-family: var(--JOSEFIN_SANS);
+  font-size: var(--FONT_SIZE_12);
   letter-spacing: 1px;
 `;
 
@@ -35,7 +42,7 @@ export const opacity = keyframes`
 export const StyledLine = styled.div`
   width: 1px;
   height: 15px;
-  background: black;
+  background: ${DARK_BLUE};
   margin: 2px;
   display: inline-block;
   animation: ${opacity} 1000ms infinite ease-in-out;

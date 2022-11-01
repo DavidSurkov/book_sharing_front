@@ -11,7 +11,7 @@ import {
   StyledLine9,
   StyledPreloader,
   StyledTitle,
-} from './Preloader.styles';
+} from 'ui/components/Preloader/Preloader.styles';
 
 interface IPreloader {
   isAbsolute: string | null;

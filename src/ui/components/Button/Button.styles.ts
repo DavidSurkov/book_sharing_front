@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DARK_BLUE, DARK_PINK, DISABLED_PINK, WHITE } from 'utils/constants/colorConstants';
 
 export interface IStyledCustomButton {
   width?: string;
@@ -18,8 +19,8 @@ export const StyledCustomButton = styled.button<IStyledCustomButton>`
   cursor: pointer;
   width: ${({ width }) => width || '200px'};
   margin: ${({ margin }) => margin};
-  background-color: ${({ backgroundColor }) => backgroundColor || '#231d4f'};
-  color: ${({ textColor }) => textColor || '#f5f5fa'};
+  background-color: ${({ backgroundColor }) => backgroundColor || `${DARK_BLUE}`};
+  color: ${({ textColor }) => textColor || `${WHITE}`};
   font-weight: ${({ fontWeight }) => fontWeight || 'bold'};
   border-radius: ${({ borderRadius }) => borderRadius || '24px'};
   padding: 0.4em 1em;
@@ -27,14 +28,14 @@ export const StyledCustomButton = styled.button<IStyledCustomButton>`
   transition: 0.1s ease-in-out;
   &:hover {
     border: none;
-    color: ${({ hoverTextColor }) => hoverTextColor || '#ffffff'};
-    background-color: ${({ hoverBackgroundColor }) => hoverBackgroundColor || '#a847cc'};
+    color: ${({ hoverTextColor }) => hoverTextColor || `${WHITE}`};
+    background-color: ${({ hoverBackgroundColor }) => hoverBackgroundColor || `${DARK_PINK}`};
     border-radius: ${({ borderRadius }) => borderRadius || '24px'};
   }
   &:disabled {
     border: none;
-    color: ${({ textColor }) => textColor || '#ffffff'};
-    background-color: ${({ disabledBackgroundColor }) => disabledBackgroundColor || 'rgba(168,71,204,0.3)'};
+    color: ${({ textColor }) => textColor || `${WHITE}`};
+    background-color: ${({ disabledBackgroundColor }) => disabledBackgroundColor || `${DISABLED_PINK}`};
     border-radius: ${({ borderRadius }) => borderRadius || '24px'};
   }
 `;

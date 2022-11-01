@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { SearchDrawer } from 'ui/components/SearchDrawer/SearchDrawer';
 import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useQueryString } from 'utils/hooks/use-query-string.hook';
-import { StyledContainer } from '../../common-styles/common.styles';
-import { Container } from './Home.styles';
+import { StyledContainer } from 'ui/common-styles/common.styles';
+import { Container } from 'ui/Pages/Home/Home.styles';
+import { BOOK } from 'utils/constants/RoutesPathConstants';
 
 const Home = () => {
   const { data, refetch } = useQueryString();
@@ -13,7 +14,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const onClickHandler = (id: number) => {
-    navigate(`/book/${id}`);
+    navigate(`${BOOK}/${id}`);
   };
 
   return (
@@ -27,8 +28,8 @@ const Home = () => {
           }}
         />
         {data?.length
-          ? data.map((book, index) => {
-              return <BookItem onClick={onClickHandler} {...book} key={index} posterUrl={book.poster.url} />;
+          ? data.map((book) => {
+              return <BookItem onClick={onClickHandler} {...book} key={book.poster.url} posterUrl={book.poster.url} />;
             })
           : ''}
       </Container>

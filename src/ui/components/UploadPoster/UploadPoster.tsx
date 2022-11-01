@@ -1,8 +1,9 @@
 import { ChangeEventHandler, FC, useRef, useState } from 'react';
 import { Button, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { posterTypes } from '../../../utils/constants/fileTypes';
+import { posterTypes } from 'utils/constants/fileTypes';
 import { StyledError } from 'ui/common-styles/common.styles';
+import { FILE_SIZE } from 'utils/constants/errorConatants';
 
 type UploadPosterPropsType = {
   setPosterFile: (posterFile: File) => void;
@@ -22,8 +23,8 @@ const UploadPoster: FC<UploadPosterPropsType> = ({ setPosterFile, setPosterError
     if (target.files && target.files[0]) {
       const poster = target.files[0];
       setPosterError(false);
-      if (poster.size > 5e6) {
-        notification.error({ message: 'File is more then 5mb' });
+      if (poster.size > FILE_SIZE) {
+        notification.error({ message: `File is more then ${FILE_SIZE}b` });
         return;
       }
       if (!Object.values(posterTypes).includes(poster.type)) {

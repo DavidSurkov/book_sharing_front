@@ -1,8 +1,9 @@
 import { ChangeEventHandler, FC, useRef, useState } from 'react';
 import { Button, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { bookTypes } from '../../../utils/constants/fileTypes';
+import { bookTypes } from 'utils/constants/fileTypes';
 import { StyledError } from 'ui/common-styles/common.styles';
+import { FILE_SIZE } from 'utils/constants/errorConatants';
 
 type UploadBookPropsType = {
   setBookFile: (bookFile: File) => void;
@@ -22,11 +23,11 @@ const UploadBook: FC<UploadBookPropsType> = ({ setBookFile, setBookError, isProp
     if (target.files && target.files[0]) {
       const book = target.files[0];
       setBookError(false);
-      if (book.size < 5e6) {
+      if (book.size < FILE_SIZE) {
         setNewBook(book);
       }
-      if (book.size > 5e6) {
-        notification.error({ message: 'File is more then 5mb' });
+      if (book.size > FILE_SIZE) {
+        notification.error({ message: `File is more then ${FILE_SIZE}b` });
         return;
       }
       if (!Object.values(bookTypes).includes(book.type)) {

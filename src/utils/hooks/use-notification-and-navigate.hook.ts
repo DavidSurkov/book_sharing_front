@@ -6,6 +6,9 @@ import { SerializedError } from '@reduxjs/toolkit';
 
 type NotificationType = 'success' | 'error';
 
+const SUCCESS = 'Success';
+const ERROR = 'Error';
+
 export const useNotificationAndNavigate = (
   isSuccess: boolean,
   isError: boolean,
@@ -27,7 +30,7 @@ export const useNotificationAndNavigate = (
 
   const openNotification = (type: NotificationType, error?: any) => {
     notification[type]({
-      message: `${type === 'success' ? 'Success' : 'Error'}`,
+      message: `${type === 'success' ? SUCCESS : ERROR}`,
       description: `${type === 'success' ? `${successMessage}` : error.data?.message}`,
     });
   };

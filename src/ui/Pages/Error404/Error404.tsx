@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledErrorWrapper, StyledH1, StyledH2 } from './Error404.styles';
+import { StyledErrorWrapper, StyledH1, StyledH2 } from 'ui/Pages/Error404/Error404.styles';
 
 const Error404 = () => {
   return (

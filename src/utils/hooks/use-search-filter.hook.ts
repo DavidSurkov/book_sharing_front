@@ -4,6 +4,7 @@ import { setAuthor, setGenre, setTitle, setYear } from 'store/filter-slice';
 import { RadioChangeEvent } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { HOME } from 'utils/constants/RoutesPathConstants';
+import { numbersRegExp } from 'utils/constants/regExp';
 
 export const useSearchFilterHook = () => {
   const navigate = useNavigate();
@@ -20,9 +21,8 @@ export const useSearchFilterHook = () => {
   };
 
   const setYearHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const regExp = new RegExp('^[0-9]*$');
     const value = e.currentTarget.value;
-    regExp.test(value) && (await dispatch(setYear(+value)));
+    numbersRegExp.test(value) && (await dispatch(setYear(+value)));
   };
 
   const setGenreHandler = (e: RadioChangeEvent) => {

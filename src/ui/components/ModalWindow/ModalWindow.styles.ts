@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import styled from 'styled-components';
+import { ERROR_COLOR, PINK_NORMAL, WHITE } from 'utils/constants/colorConstants';
 
 export const ToggleModalButton = styled(Button)`
   width: 120px;
@@ -10,8 +11,8 @@ export const ToggleModalButton = styled(Button)`
   outline: none;
   border: none;
   &:enabled {
-    background: #bb6bd9;
-    color: #f5f5fa;
+    background: ${PINK_NORMAL};
+    color: ${WHITE};
   }
 `;
 
@@ -44,5 +45,5 @@ export const StyledUploadPosterWrapper = styled.div`
 
 export const ElementErrorWrapper = styled.div<{ isError?: boolean }>`
   width: 100%;
-  border: ${({ isError }) => (isError ? '1px solid red' : '')};
+  border: ${({ isError }) => (isError ? `1px solid ${ERROR_COLOR}` : '')};
 `;

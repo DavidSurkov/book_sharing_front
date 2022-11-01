@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { filterSlice } from './filter-slice';
-import { apiSlice } from '../services/api/api-slice';
-import { userPersistedReducer } from './user-slice';
+import { filterSlice } from 'store/filter-slice';
+import { apiSlice } from 'services/api/api-slice';
+import { userPersistedReducer } from 'store/user-slice';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 export const store = configureStore({

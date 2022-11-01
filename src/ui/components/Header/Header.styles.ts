@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DARK_BLUE } from 'utils/constants/colorConstants';
 
 export const StyledHeader = styled.header`
   display: flex;
@@ -18,8 +19,8 @@ export const LogoWrapper = styled.div`
 `;
 
 export const HeaderTitle = styled.h2`
-  font-weight: 600;
-  color: #231d4f;
+  font-weight: var(--FONT_BOLD);
+  color: ${DARK_BLUE};
   margin-left: 5px;
   cursor: pointer;
 `;
@@ -49,13 +50,12 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 7px;
-  color: #231d4f;
-  font-weight: bold;
+  color: ${DARK_BLUE};
+  font-weight: var(--FONT_BOLD);
   border-radius: 25px;
 `;
 
 export const StyledParagraph = styled.span`
-  font-size: 18px;
-  margin: 0;
+  font-size: var(--FONT_SIZE_18);
   line-height: normal;
 `;

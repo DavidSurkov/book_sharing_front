@@ -6,12 +6,16 @@ export const StyledLinksWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  font-family: JosefinSans, sans-serif;
-  font-size: 15px;
+  font-size: var(--FONT_SIZE_15);
 `;
 
 export const NewUserWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 200px;
+`;
+
+export const StyledDiv = styled.div`
+  height: 70px;
   width: 200px;
 `;

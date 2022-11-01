@@ -11,7 +11,7 @@ import {
   StyledLogoImage,
   StyledParagraph,
   UserInfoWrapper,
-} from './Header.styles';
+} from 'ui/components/Header/Header.styles';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
 import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useSearchFilterHook } from 'utils/hooks/use-search-filter.hook';
@@ -27,7 +27,7 @@ const Header = () => {
   const isAuthorised = useAppSelector((state) => state.user.isAuthorised);
   const [signOut, { isSuccess, isError, error }] = useSignOutMutation();
   const { toggleDrawer } = useToggleDrawer();
-  useNotificationAndNavigate(isSuccess, isError, error, '', LOGIN);
+  useNotificationAndNavigate(isSuccess, isError, error, undefined, LOGIN);
   const { title, setTitleHandler } = useSearchFilterHook();
 
   const logOutHandler = () => {
@@ -71,7 +71,6 @@ const Header = () => {
       <ModalWindow />
 
       <UserInfoWrapper>
-        {/*<StyledParagraph>{userName.name}</StyledParagraph>*/}
         <StyledParagraph>{userName.email}</StyledParagraph>
       </UserInfoWrapper>
       <StyledIcon src={outIcon} alt="Log out icon" onClick={logOutHandler} />

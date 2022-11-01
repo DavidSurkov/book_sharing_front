@@ -1,24 +1,22 @@
 import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from 'utils/constants/endpointConstants';
 import { signInUser, signOutUser } from 'store/user-slice';
-import { apiSlice } from '../api/api-slice';
+import { apiSlice } from 'services/api/api-slice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { userPersistedStore } from '../../store/store';
+import { userPersistedStore } from 'store/store';
 
-interface ISignUpReq {
-  name: string;
+interface ISignInReq {
   email: string;
   password: string;
+}
+
+interface ISignUpReq extends ISignInReq {
+  name: string;
 }
 
 export interface IUser {
   id: number;
   name: string;
   email: string;
-}
-
-interface ISignInReq {
-  email: string;
-  password: string;
 }
 
 export const authAPI = apiSlice.injectEndpoints({

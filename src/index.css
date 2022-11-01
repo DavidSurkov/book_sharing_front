@@ -31,7 +31,7 @@ code {
   text-decoration: none;
   list-style: none;
   outline: none;
-  font-family: JosefinSans, sans-serif;
+  font-family: var(--JOSEFIN_SANS);
 }
 
 img {
@@ -49,4 +49,16 @@ p,
 ul {
   margin: 0;
   padding: 0;
+}
+
+:root {
+  --JOSEFIN_SANS: JosefinSans, sans-serif;
+
+  --FONT_SIZE_12: 12px;
+  --FONT_SIZE_15: 15px;
+  --FONT_SIZE_16: 16px;
+  --FONT_SIZE_18: 18px;
+  --FONT_SIZE_20: 20px;
+
+  --FONT_BOLD: bold;
 }

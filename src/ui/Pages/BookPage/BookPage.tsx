@@ -10,7 +10,7 @@ import {
   DeleteButton,
   DescriptionSector,
   InfoWrapper,
-} from './BookPage.styles';
+} from 'ui/Pages/BookPage/BookPage.styles';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
 import { HOME } from 'utils/constants/RoutesPathConstants';
 
@@ -34,6 +34,7 @@ const BookPage = () => {
           <BookInfo>Book title: {data && data.title}</BookInfo>
           <BookInfo>Author: {data && data.author}</BookInfo>
           <BookInfo>Year: {data && data.year}</BookInfo>
+          {data && data.genres.map((genre) => <BookInfo key={genre.id}>{genre.name}</BookInfo>)}
           <DescriptionSector>
             <BookInfo>{data && data.description}</BookInfo>
           </DescriptionSector>

@@ -1,8 +1,9 @@
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { UNAUTHORISED_ERROR_STATUS } from '../../utils/constants/errorConatants';
-import { AUTH, CHECK, REFRESH } from '../../utils/constants/endpointConstants';
-import { signInUser, signOutUser } from '../../store/user-slice';
-import { IUser } from '../auth/authAPI';
+import { UNAUTHORISED_ERROR_STATUS } from 'utils/constants/errorConatants';
+import { AUTH, CHECK, REFRESH } from 'utils/constants/endpointConstants';
+import { signInUser, signOutUser } from 'store/user-slice';
+import { IUser } from 'services/auth/authAPI';
+import { BOOK_TAG } from 'services/constants/tag-constants';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.BACKEND_URL || 'http://localhost:4000',
@@ -35,6 +36,6 @@ const baseQueryWithReauthorise: BaseQueryFn<string | FetchArgs, unknown, FetchBa
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauthorise,
-  tagTypes: ['Book'],
+  tagTypes: [BOOK_TAG],
   endpoints: () => ({}),
 });

@@ -1,10 +1,10 @@
 import { Input, Modal, Select } from 'antd';
 import React, { FC, useEffect, useState } from 'react';
-import { useAllGenreQuery, usePostBookMutation } from '../../../services/book/bookAPI';
-import { useToggle } from '../../../utils/hooks/use-toggle.hook';
+import { useAllGenreQuery, usePostBookMutation } from 'services/book/bookAPI';
+import { useToggle } from 'utils/hooks/use-toggle.hook';
 import { Controller, useForm } from 'react-hook-form';
-import UploadBook from '../UploadFile/UploadBook';
-import UploadPoster from '../UploadPoster/UploadPoster';
+import UploadBook from 'ui/components/UploadFile/UploadBook';
+import UploadPoster from 'ui/components/UploadPoster/UploadPoster';
 import {
   ElementErrorWrapper,
   StyledGenreDateWrapper,
@@ -12,21 +12,22 @@ import {
   StyledUploadPosterWrapper,
   StyledUploadWrapper,
   ToggleModalButton,
-} from './ModalWindow.styles';
+} from 'ui/components/ModalWindow/ModalWindow.styles';
 import { StyledError } from 'ui/common-styles/common.styles';
-import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
-import Preloader from '../Preloader/Preloader';
+import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
+import Preloader from 'ui/components/Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
-import { HOME } from '../../../utils/constants/RoutesPathConstants';
+import { HOME } from 'utils/constants/RoutesPathConstants';
+import { appendFormData } from 'ui/components/ModalWindow/appendFormData';
 
-type AddBookFormType = {
+export type AddBookFormType = {
   title: string;
   author: string;
-  genre: number;
+  genre: number[];
   year: Date;
   description: string;
-  book?: File | null;
-  poster?: File | null;
+  book?: File | null | undefined;
+  poster?: File | null | undefined;
 };
 
 const ModalWindow: FC = () => {
@@ -63,11 +64,15 @@ const ModalWindow: FC = () => {
   }, [isSuccess]);
   const maxPikedDate = new Date().toISOString().split('T')[0];
 
-  const formData = new FormData();
   const onSubmit = async (data: AddBookFormType) => {
     if (genres) {
-      const genre = genres.find((e) => {
-        return e.id === data.genre;
+      const genre = genres.filter((element) => {
+        return (
+          element.id ===
+          data.genre.find((elementId) => {
+            return elementId === element.id;
+          })
+        );
       });
       if (!bookFile) {
         setBookError(true);
@@ -77,14 +82,8 @@ const ModalWindow: FC = () => {
         setPosterError(true);
         return;
       }
-
-      formData.append('title', data.title);
-      formData.append('author', data.author);
-      formData.append('year', new Date(data.year).getFullYear().toString());
-      formData.append('description', data.description);
-      genre && formData.append('genres[0]', `{"id": ${genre.id}, "name": "${genre.name}"}`);
-      formData.append('book', data.book instanceof File ? data.book : `${data.book}`);
-      formData.append('poster', data.poster instanceof File ? data.poster : `${data.poster}`);
+      console.log(genre);
+      const formData = appendFormData(data, genre);
       await postBook(formData);
       isSuccess && toggleModal();
     }
@@ -135,7 +134,7 @@ const ModalWindow: FC = () => {
               <Controller
                 render={({ field }) => (
                   <ElementErrorWrapper isError={!!errors.genre}>
-                    <Select {...field} placeholder={'Genre'}>
+                    <Select mode="multiple" {...field} placeholder={'Genre'}>
                       {genres &&
                         genres.map((i) => (
                           <Select.Option key={i.id} value={i.id}>

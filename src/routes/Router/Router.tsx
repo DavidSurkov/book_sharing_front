@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { authRoutes } from '../auth-routes';
-import { privateRoutes } from '../private-routes';
-import { publicRoutes } from '../public-routes';
-import { SignedRouteBlocker } from '../hocs/SignedRouteBlocker';
-import { ProtectedRouteBlocker } from '../hocs/ProtectedRouteBlocker';
+import { authRoutes } from 'routes/auth-routes';
+import { privateRoutes } from 'routes/private-routes';
+import { publicRoutes } from 'routes/public-routes';
+import { SignedRouteBlocker } from 'routes/hocs/SignedRouteBlocker';
+import { ProtectedRouteBlocker } from 'routes/hocs/ProtectedRouteBlocker';
 
 const Router = () => {
   return (

@@ -1,6 +1,7 @@
 import { ALL, BOOK, GENRE, SEARCH } from 'utils/constants/endpointConstants';
-import { IUser } from '../auth/authAPI';
-import { apiSlice } from '../api/api-slice';
+import { BOOK_TAG } from 'services/constants/tag-constants';
+import { IUser } from 'services/auth/authAPI';
+import { apiSlice } from 'services/api/api-slice';
 
 export interface IGenre {
   id: number;
@@ -42,7 +43,7 @@ export const bookAPI = apiSlice.injectEndpoints({
         method: 'POST',
         body: arg,
       }),
-      invalidatesTags: () => ['Book'],
+      invalidatesTags: () => [BOOK_TAG],
     }),
 
     getAllBooks: build.query<IBook[], string>({
@@ -50,7 +51,7 @@ export const bookAPI = apiSlice.injectEndpoints({
         url: `/${BOOK}/${SEARCH}?${arg}`,
         method: 'GET',
       }),
-      providesTags: () => ['Book'],
+      providesTags: () => [BOOK_TAG],
     }),
 
     getOneBook: build.query<IBook, string | undefined>({
@@ -58,7 +59,7 @@ export const bookAPI = apiSlice.injectEndpoints({
         url: `/${BOOK}/${id}`,
         method: 'GET',
       }),
-      providesTags: () => ['Book'],
+      providesTags: () => [BOOK_TAG],
     }),
 
     deleteBook: build.mutation<void, number | undefined>({
@@ -66,7 +67,7 @@ export const bookAPI = apiSlice.injectEndpoints({
         url: `/${BOOK}/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: () => ['Book'],
+      invalidatesTags: () => [BOOK_TAG],
     }),
   }),
 });

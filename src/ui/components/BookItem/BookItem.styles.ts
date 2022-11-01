@@ -1,9 +1,9 @@
 import styled from 'styled-components';
+import { DARK_BLUE, WHITE } from 'utils/constants/colorConstants';
 
 export const Block = styled.div`
   padding: 20px;
-  border: 1px solid black;
-  background: #301c49;
+  background: ${DARK_BLUE};
   border-radius: 8px;
   width: 242px;
 `;
@@ -19,23 +19,18 @@ export const BookPoster = styled.img`
   width: 170px;
 `;
 
-export const BookDescription = styled.div`
-  color: white;
-  font-size: 18px;
-`;
-
 export const BookTitle = styled.div`
-  color: white;
-  font-size: 19px;
+  color: ${WHITE};
+  font-size: var(--FONT_SIZE_20);
   text-align: center;
 `;
 
 export const Year = styled.div`
-  color: white;
-  font-size: 18px;
+  color: ${WHITE};
+  font-size: var(--FONT_SIZE_20);
 `;
 
 export const BookAuthor = styled.div`
-  color: white;
-  font-size: 18px;
+  color: ${WHITE};
+  font-size: var(--FONT_SIZE_20);
 `;

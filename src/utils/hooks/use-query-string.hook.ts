@@ -1,6 +1,6 @@
 import { useGetAllBooksQuery } from 'services/book/bookAPI';
 import { useAppSelector } from 'services/hooks/hooks';
-import { useDebounce } from './use-debounce.hook';
+import { useDebounce } from 'utils/hooks/use-debounce.hook';
 
 export const useQueryString = () => {
   const isAuthorised = useAppSelector((state) => state.user.isAuthorised);

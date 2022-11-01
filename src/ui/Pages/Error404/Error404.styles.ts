@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DARK_BLUE } from 'utils/constants/colorConstants';
 
 export const StyledErrorWrapper = styled.div`
   display: flex;
@@ -10,11 +11,11 @@ export const StyledErrorWrapper = styled.div`
 `;
 
 export const StyledH1 = styled.h1`
-  color: #61dafb;
+  color: ${DARK_BLUE};
   font-size: 45px;
 `;
 
 export const StyledH2 = styled.h2`
-  color: red;
+  color: ${DARK_BLUE};
   font-size: 35px;
 `;

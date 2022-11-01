@@ -26,7 +26,7 @@ export const ShiftedElement = ({ children, isShifted, initialTop, initialLeft }:
   const onMouseEvent = () => {
     if (isDisabled) {
       setTop(Math.ceil(Math.random() * 90) + '%');
-      setLeft(Math.ceil(Math.random() * 90) + '%');
+      setLeft(Math.ceil((Math.random() - 0.3) * 90) + '%');
     }
   };
   return (

@@ -1,10 +1,9 @@
-import { FORGOT_PASSWORD, HOME, REGISTRATION } from 'utils/constants/RoutesPathConstants';
+import { FORGOT_PASSWORD, REGISTRATION } from 'utils/constants/RoutesPathConstants';
 import { Controller, useForm } from 'react-hook-form';
 import { emailRegExp } from 'utils/constants/regExp';
 import { useSignInMutation } from 'services/auth/authAPI';
 import Preloader from 'ui/components/Preloader/Preloader';
-import { NewUserWrapper, StyledLinksWrapper } from './Login.styles';
-import { useNotificationAndNavigate } from '../../../utils/hooks/use-notification-and-navigate.hook';
+import { NewUserWrapper, StyledDiv, StyledLinksWrapper } from 'ui/Pages/Login/Login.styles';
 import logo from 'utils/assets/logo.png';
 import {
   StyledContainer,
@@ -20,6 +19,12 @@ import {
 } from 'ui/common-styles/common.styles';
 import { Button } from 'ui/components/Button/Button';
 import { ShiftedElement } from 'ui/components/ShiftedElement/ShiftedElement';
+import {
+  NOT_CORRECT_EMAIL,
+  REQUIRED_EMAIL,
+  REQUIRED_PASSWORD,
+  TO_SHORT_PASSWORD,
+} from 'utils/constants/errorConatants';
 
 type LoginFormTypes = {
   email: string;
@@ -27,8 +32,7 @@ type LoginFormTypes = {
 };
 
 const Login = () => {
-  const [signIn, { error, isLoading, isSuccess, isError }] = useSignInMutation();
-  useNotificationAndNavigate(isSuccess, isError, error, 'Hello', HOME);
+  const [signIn, { isLoading }] = useSignInMutation();
 
   const {
     control,
@@ -52,8 +56,8 @@ const Login = () => {
             control={control}
             defaultValue=""
             rules={{
-              required: { message: 'Email is required', value: true },
-              pattern: { message: 'Email is not correct', value: emailRegExp },
+              required: { message: REQUIRED_EMAIL, value: true },
+              pattern: { message: NOT_CORRECT_EMAIL, value: emailRegExp },
             }}
           />
           <Controller
@@ -62,13 +66,11 @@ const Login = () => {
             control={control}
             defaultValue=""
             rules={{
-              required: { message: 'Password is required', value: true },
-              minLength: { message: 'Password should be more then 8 char', value: 8 },
+              required: { message: REQUIRED_PASSWORD, value: true },
+              minLength: { message: TO_SHORT_PASSWORD, value: 8 },
             }}
           />
-          <ShiftedElement isShifted={!!errors.email || !!errors.password} initialTop={'85%'} initialLeft={'50px'}>
-            <Button disabled={!!errors.email || !!errors.password}>Sign in</Button>
-          </ShiftedElement>
+          <StyledDiv></StyledDiv>
           <StyledLinksWrapper>
             <NewUserWrapper>
               <StyledSpan>New user?</StyledSpan>
@@ -76,6 +78,9 @@ const Login = () => {
             </NewUserWrapper>
             <StyledNavLink to={FORGOT_PASSWORD}> Forgot password</StyledNavLink>
           </StyledLinksWrapper>
+          <ShiftedElement isShifted={!!errors.email || !!errors.password} initialTop={'65%'} initialLeft={'50px'}>
+            <Button disabled={!!errors.email || !!errors.password}>Sign in</Button>
+          </ShiftedElement>
         </StyledForm>
       </form>
 
