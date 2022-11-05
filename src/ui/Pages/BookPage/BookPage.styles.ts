@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Button } from 'antd';
-import { DARK_BLUE, PINK_NORMAL, WHITE } from 'utils/constants/colorConstants';
+import { DARK_BLUE, PINK_NORMAL, WHITE } from 'utils/constants/color-constants';
+import { FONT_SIZE_16 } from 'utils/constants/font-constants';
 
 export const BookInfoContainer = styled.div`
   max-width: 1200px;
@@ -22,8 +23,7 @@ export const BookPoster = styled.img`
 `;
 
 export const BookInfo = styled.span`
-  font-family: Arial, sans-serif;
-  font-size: 16px;
+  font-size: ${FONT_SIZE_16};
   text-align: center;
   margin-top: 10px;
 `;

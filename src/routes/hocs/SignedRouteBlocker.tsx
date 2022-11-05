@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { HOME } from 'utils/constants/RoutesPathConstants';
+import { HOME } from 'utils/constants/routes-path-constants';
 import { useAppSelector } from 'services/hooks/hooks';
 
 export const SignedRouteBlocker = ({ children }: { children: JSX.Element }) => {

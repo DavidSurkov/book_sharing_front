@@ -1,12 +1,8 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { emailRegExp } from 'utils/constants/regExp';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Space } from 'antd';
-import { LOGIN } from 'utils/constants/RoutesPathConstants';
-import { useSignUpMutation } from 'services/auth/authAPI';
-import Preloader from 'ui/components/Preloader/Preloader';
-import { StyledUserOutlined } from 'ui/Pages/Registration/Registration.styles';
+import { useForm } from 'react-hook-form';
+import { LOGIN } from 'utils/constants/routes-path-constants';
+import { useSignUpMutation } from 'services/auth/auth-API';
+import { Preloader } from 'ui/components/Preloader/Preloader';
 import {
   StyledButton,
   StyledContainer,
@@ -14,22 +10,16 @@ import {
   StyledErrorSpanEmail,
   StyledErrorSpanPass,
   StyledForm,
-  StyledInput,
-  StyledInputPassword,
   StyledLogo,
   StyledNavLink,
   StyledSpan,
   StyledTitle,
 } from 'ui/common-styles/common.styles';
-import logo from 'utils/assets/logo.png';
+import logo from 'assets/logo.png';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
-import {
-  NOT_CORRECT_EMAIL,
-  REQUIRED_EMAIL,
-  REQUIRED_NAME,
-  REQUIRED_PASSWORD,
-  TO_SHORT_PASSWORD,
-} from 'utils/constants/errorConatants';
+import { DO_NOT_MATCH_PASSWORD, REQUIRED_NAME } from 'utils/constants/error-conatants';
+import { ControlledInput } from 'ui/components/ControlledInput/ControlledInput';
+import { emailRules, passwordRules } from 'utils/use-form/form-constants';
 
 type RegistrationTypes = {
   email: string;
@@ -38,8 +28,9 @@ type RegistrationTypes = {
   confirmPassword: string;
 };
 
-const Registration = () => {
+export const Registration = () => {
   const [signUp, { error, isLoading, isSuccess, isError }] = useSignUpMutation();
+
   useNotificationAndNavigate(isSuccess, isError, error, undefined, LOGIN);
 
   const {
@@ -48,6 +39,7 @@ const Registration = () => {
     watch,
     formState: { errors },
   } = useForm<RegistrationTypes>();
+
   const onSubmit = (data: RegistrationTypes) => {
     const { name, email, password } = data;
     signUp({ name, email, password });
@@ -55,69 +47,43 @@ const Registration = () => {
 
   return (
     <StyledContainer>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <StyledForm>
-          <StyledLogo src={logo} alt="Book Sharing logo" />
-          <StyledTitle> Book Sharing </StyledTitle>
-          <Controller
-            render={({ field }) => <StyledInput {...field} placeholder="User name" prefix={<StyledUserOutlined />} />}
-            name="name"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: REQUIRED_NAME, value: true },
-            }}
-          />
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <StyledLogo src={logo} alt="Book Sharing logo" />
+        <StyledTitle> Book Sharing </StyledTitle>
 
-          <Controller
-            render={({ field }) => <StyledInput {...field} type="email" placeholder="Email" />}
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{
-              required: { message: REQUIRED_EMAIL, value: true },
-              pattern: { message: NOT_CORRECT_EMAIL, value: emailRegExp },
-            }}
-          />
+        <ControlledInput
+          name="name"
+          placeholder="User name"
+          control={control}
+          rules={{
+            required: { message: REQUIRED_NAME, value: true },
+          }}
+        />
 
-          <Space direction="vertical">
-            <Controller
-              render={({ field }) => <StyledInputPassword {...field} placeholder="Password" />}
-              name="password"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: { message: REQUIRED_PASSWORD, value: true },
-                minLength: { message: TO_SHORT_PASSWORD, value: 8 },
-              }}
-            />
-            <Controller
-              render={({ field }) => (
-                <StyledInputPassword
-                  {...field}
-                  placeholder="Confirm password"
-                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-                />
-              )}
-              name="confirmPassword"
-              control={control}
-              defaultValue=""
-              rules={{
-                validate: (value: string) => {
-                  if (watch('password') !== value) {
-                    return 'Password do not much';
-                  }
-                },
-              }}
-            />
-          </Space>
-          <StyledButton htmlType="submit">Sign up</StyledButton>
-          <div>
-            <StyledSpan>Already have an account?</StyledSpan>
-            <StyledNavLink to={LOGIN}>Login</StyledNavLink>
-          </div>
-        </StyledForm>
-      </form>
+        <ControlledInput name="email" control={control} placeholder="Email" rules={emailRules} />
+
+        <ControlledInput name="password" control={control} placeholder="Password" rules={passwordRules} />
+
+        <ControlledInput
+          name="confirmPassword"
+          control={control}
+          placeholder="Confirm password"
+          rules={{
+            validate: (value: string) => {
+              if (watch('password') !== value) {
+                return DO_NOT_MATCH_PASSWORD;
+              }
+            },
+          }}
+        />
+
+        <StyledButton htmlType="submit">Sign up</StyledButton>
+        <div>
+          <StyledSpan>Already have an account?</StyledSpan>
+          <StyledNavLink to={LOGIN}>Login</StyledNavLink>
+        </div>
+      </StyledForm>
+
       {errors.email && <StyledErrorSpanEmail>{errors.email?.message}</StyledErrorSpanEmail>}
       {errors.password && <StyledErrorSpanPass>{errors.password?.message}</StyledErrorSpanPass>}
       {errors.confirmPassword && (
@@ -127,5 +93,3 @@ const Registration = () => {
     </StyledContainer>
   );
 };
-
-export default Registration;

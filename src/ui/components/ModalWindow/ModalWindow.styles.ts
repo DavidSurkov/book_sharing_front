@@ -1,12 +1,13 @@
 import { Button } from 'antd';
 import styled from 'styled-components';
-import { ERROR_COLOR, PINK_NORMAL, WHITE } from 'utils/constants/colorConstants';
+import { ERROR_COLOR, PINK_NORMAL, WHITE } from 'utils/constants/color-constants';
+import { BORDER_RADIUS_24PX } from 'utils/constants/css-constants';
 
 export const ToggleModalButton = styled(Button)`
   width: 120px;
   margin: 0 10px;
   font-weight: bold;
-  border-radius: 24px;
+  border-radius: ${BORDER_RADIUS_24PX};
   height: 32px;
   outline: none;
   border: none;

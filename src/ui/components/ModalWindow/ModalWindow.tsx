@@ -1,6 +1,6 @@
-import { Input, Modal, Select } from 'antd';
-import React, { FC, useEffect, useState } from 'react';
-import { useAllGenreQuery, usePostBookMutation } from 'services/book/bookAPI';
+import { Input, Modal } from 'antd';
+import { FC, useEffect, useState } from 'react';
+import { useAllGenreQuery, usePostBookMutation } from 'services/book/book-API';
 import { useToggle } from 'utils/hooks/use-toggle.hook';
 import { Controller, useForm } from 'react-hook-form';
 import UploadBook from 'ui/components/UploadFile/UploadBook';
@@ -13,12 +13,20 @@ import {
   StyledUploadWrapper,
   ToggleModalButton,
 } from 'ui/components/ModalWindow/ModalWindow.styles';
-import { StyledError } from 'ui/common-styles/common.styles';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
-import Preloader from 'ui/components/Preloader/Preloader';
+import { Preloader } from 'ui/components/Preloader/Preloader';
 import { useNavigate } from 'react-router-dom';
-import { HOME } from 'utils/constants/RoutesPathConstants';
-import { appendFormData } from 'ui/components/ModalWindow/appendFormData';
+import { HOME } from 'utils/constants/routes-path-constants';
+import { appendFormData } from 'ui/components/ModalWindow/append-formData';
+import {
+  REQUIRED_BOOK_AUTHOR,
+  REQUIRED_BOOK_DESCRIPTION,
+  REQUIRED_BOOK_GENRE,
+  REQUIRED_BOOK_TITLE,
+} from 'utils/constants/error-conatants';
+import { ControlledInput } from 'ui/components/ControlledInput/ControlledInput';
+import { ControlledSelect } from 'ui/components/ControlledSelect/ControlledSelect';
+import { ErrorSpan } from 'ui/components/ErrorSpan/ErrorSpan';
 
 export type AddBookFormType = {
   title: string;
@@ -26,11 +34,11 @@ export type AddBookFormType = {
   genre: number[];
   year: Date;
   description: string;
-  book?: File | null | undefined;
-  poster?: File | null | undefined;
+  book?: File | null;
+  poster?: File | null;
 };
 
-const ModalWindow: FC = () => {
+export const ModalWindow: FC = () => {
   const navigate = useNavigate();
   const { modal, toggleModal } = useToggle();
   const [bookFile, setBookFile] = useState<File | null>();
@@ -62,6 +70,7 @@ const ModalWindow: FC = () => {
   useEffect(() => {
     isSuccess && toggleModal();
   }, [isSuccess]);
+
   const maxPikedDate = new Date().toISOString().split('T')[0];
 
   const onSubmit = async (data: AddBookFormType) => {
@@ -82,7 +91,6 @@ const ModalWindow: FC = () => {
         setPosterError(true);
         return;
       }
-      console.log(genre);
       const formData = appendFormData(data, genre);
       await postBook(formData);
       isSuccess && toggleModal();
@@ -104,54 +112,45 @@ const ModalWindow: FC = () => {
         {isLoading && <Preloader isAbsolute={null} bottom={null} left={null} />}
         <form>
           <ElementErrorWrapper isError={!!errors.title}>
-            <Controller
-              render={({ field }) => <Input required placeholder="Book title" {...field} />}
+            <ControlledInput
               name="title"
               control={control}
-              defaultValue=""
+              placeholder="Book title"
               rules={{
-                required: { message: 'Title is required', value: true },
+                required: { message: REQUIRED_BOOK_TITLE, value: true },
               }}
             />
           </ElementErrorWrapper>
-          {errors.title && <StyledError>Book title is required!</StyledError>}
+          <ErrorSpan error={errors.title?.message} />
 
           <ElementErrorWrapper isError={!!errors.author}>
-            <Controller
-              render={({ field }) => <Input required placeholder="Author" {...field} />}
+            <ControlledInput
               name="author"
               control={control}
-              defaultValue=""
+              placeholder="Author"
               rules={{
-                required: { message: 'Author is required', value: true },
+                required: { message: REQUIRED_BOOK_AUTHOR, value: true },
               }}
             />
           </ElementErrorWrapper>
-          {errors.author && <StyledError>Author is required!</StyledError>}
+          <ErrorSpan error={errors.author?.message} />
 
           <StyledGenreDateWrapper>
             <div>
-              <Controller
-                render={({ field }) => (
-                  <ElementErrorWrapper isError={!!errors.genre}>
-                    <Select mode="multiple" {...field} placeholder={'Genre'}>
-                      {genres &&
-                        genres.map((i) => (
-                          <Select.Option key={i.id} value={i.id}>
-                            {i.name}
-                          </Select.Option>
-                        ))}
-                    </Select>
-                  </ElementErrorWrapper>
-                )}
-                name="genre"
-                control={control}
-                rules={{
-                  required: { message: 'Genre is required', value: true },
-                }}
-              />
+              {genres?.length && (
+                <ControlledSelect
+                  name="genre"
+                  control={control}
+                  rules={{
+                    required: { message: REQUIRED_BOOK_GENRE, value: true },
+                  }}
+                  values={genres}
+                  mode="multiple"
+                  placeholder={'Genre'}
+                />
+              )}
 
-              {errors.genre && <StyledError>Genre is required!</StyledError>}
+              <ErrorSpan error={errors.genre?.message} />
             </div>
             <div>
               <input
@@ -161,7 +160,8 @@ const ModalWindow: FC = () => {
                   required: true,
                 })}
               />
-              {errors.year && <StyledError>Year is required!</StyledError>}
+
+              <ErrorSpan error={errors.year?.message} />
             </div>
           </StyledGenreDateWrapper>
 
@@ -173,11 +173,12 @@ const ModalWindow: FC = () => {
               name={'description'}
               control={control}
               rules={{
-                required: { message: 'Genre is required', value: true },
+                required: { message: REQUIRED_BOOK_DESCRIPTION, value: true },
               }}
             />
           </ElementErrorWrapper>
-          {errors.description && <StyledError>Description is required!</StyledError>}
+
+          <ErrorSpan error={errors.description?.message} />
 
           <StyledUploadWrapper>
             <StyledUploadFileWrapper>
@@ -193,5 +194,3 @@ const ModalWindow: FC = () => {
     </>
   );
 };
-
-export default ModalWindow;

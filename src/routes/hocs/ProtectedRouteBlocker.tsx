@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { LOGIN } from 'utils/constants/RoutesPathConstants';
+import { LOGIN } from 'utils/constants/routes-path-constants';
 import { useAppSelector } from 'services/hooks/hooks';
 
 export const ProtectedRouteBlocker = ({ children }: { children: JSX.Element }) => {

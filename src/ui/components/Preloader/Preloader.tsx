@@ -19,7 +19,7 @@ interface IPreloader {
   left: string | null;
 }
 
-const Preloader: FC<IPreloader> = ({ isAbsolute, bottom, left }) => {
+export const Preloader: FC<IPreloader> = ({ isAbsolute, bottom, left }) => {
   return (
     <StyledPreloader isAbsolute={isAbsolute} bottom={bottom} left={left}>
       <StyledLine1></StyledLine1>
@@ -35,5 +35,3 @@ const Preloader: FC<IPreloader> = ({ isAbsolute, bottom, left }) => {
     </StyledPreloader>
   );
 };
-
-export default Preloader;

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { DARK_BLUE, WHITE } from 'utils/constants/colorConstants';
+import { DARK_BLUE, WHITE } from 'utils/constants/color-constants';
+import { FONT_SIZE_20 } from 'utils/constants/font-constants';
 
 export const Block = styled.div`
   padding: 20px;
@@ -21,16 +22,16 @@ export const BookPoster = styled.img`
 
 export const BookTitle = styled.div`
   color: ${WHITE};
-  font-size: var(--FONT_SIZE_20);
+  font-size: ${FONT_SIZE_20};
   text-align: center;
 `;
 
 export const Year = styled.div`
   color: ${WHITE};
-  font-size: var(--FONT_SIZE_20);
+  font-size: ${FONT_SIZE_20};
 `;
 
 export const BookAuthor = styled.div`
   color: ${WHITE};
-  font-size: var(--FONT_SIZE_20);
+  font-size: ${FONT_SIZE_20};
 `;

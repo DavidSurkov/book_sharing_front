@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { Button, Input } from 'antd';
-import { DARK_BLUE, DARK_PINK, USER_ICON, WHITE } from 'utils/constants/colorConstants';
+import { DARK_BLUE, DARK_PINK, GRAY_COLOR_OPACITY_0_58, WHITE } from 'utils/constants/color-constants';
+import { FONT_BOLD, FONT_SIZE_20 } from 'utils/constants/font-constants';
+import { BORDER_RADIUS_24PX } from 'utils/constants/css-constants';
 
 export const StyledContainer = styled.div`
   width: 100vw;
@@ -11,20 +13,13 @@ export const StyledContainer = styled.div`
   align-items: center;
 `;
 
-export const StyledError = styled.p`
-  color: ${DARK_BLUE};
-  font-size: var(--FONT_SIZE_16);
-  text-align: center;
-  margin-top: 7px;
-`;
-
-export const StyledForm = styled.div`
+export const StyledForm = styled.form`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid ${USER_ICON};
-  border-radius: 20px;
+  border: 1px solid ${GRAY_COLOR_OPACITY_0_58};
+  border-radius: ${BORDER_RADIUS_24PX};
   width: 300px;
   height: 420px;
 `;
@@ -65,7 +60,6 @@ export const StyledInputPassword = styled(Input.Password)`
   text-overflow: ellipsis;
   white-space: nowrap;
   border: none;
-
   &:hover {
     border: none;
   }
@@ -77,7 +71,7 @@ export const StyledButton = styled(Button)`
   background: ${DARK_BLUE};
   color: ${WHITE};
   font-weight: bold;
-  border-radius: 24px;
+  border-radius: ${BORDER_RADIUS_24PX};
   height: 32px;
   outline: none;
   text-overflow: ellipsis;
@@ -86,7 +80,7 @@ export const StyledButton = styled(Button)`
     border: none;
     color: ${WHITE};
     background: ${DARK_PINK};
-    border-radius: 24px;
+    border-radius: ${BORDER_RADIUS_24PX};
   }
 `;
 
@@ -101,7 +95,7 @@ export const StyledErrorSpanEmail = styled.span`
   position: absolute;
   bottom: 50px;
   color: ${WHITE};
-  font-size: var(--FONT_SIZE_20);
+  font-size: ${FONT_SIZE_20};
 `;
 
 export const StyledErrorSpanPass = styled.span`
@@ -111,7 +105,7 @@ export const StyledErrorSpanPass = styled.span`
   position: absolute;
   bottom: 25px;
   color: ${WHITE};
-  font-size: var(--FONT_SIZE_20);
+  font-size: ${FONT_SIZE_20};
 `;
 
 export const StyledErrorSpanConfirmPass = styled.span`
@@ -121,12 +115,12 @@ export const StyledErrorSpanConfirmPass = styled.span`
   position: absolute;
   bottom: 25px;
   color: ${WHITE};
-  font-size: var(--FONT_SIZE_20);
+  font-size: ${FONT_SIZE_20};
 `;
 
 export const StyledNavLink = styled(NavLink)`
   color: ${DARK_BLUE};
-  font-weight: var(--FONT_BOLD);
+  font-weight: ${FONT_BOLD};
 
   &:hover {
     color: ${WHITE};

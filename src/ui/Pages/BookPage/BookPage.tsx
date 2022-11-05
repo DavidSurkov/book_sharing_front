@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useDeleteBookMutation, useGetOneBookQuery } from 'services/book/bookAPI';
+import { useDeleteBookMutation, useGetOneBookQuery } from 'services/book/book-API';
 import { useAppSelector } from 'services/hooks/hooks';
 import {
   BookInfo,
@@ -12,9 +12,9 @@ import {
   InfoWrapper,
 } from 'ui/Pages/BookPage/BookPage.styles';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
-import { HOME } from 'utils/constants/RoutesPathConstants';
+import { HOME } from 'utils/constants/routes-path-constants';
 
-const BookPage = () => {
+export const BookPage = () => {
   const { id } = useParams<string>();
   const { data } = useGetOneBookQuery(id);
   const [deleteBook, { isSuccess, isError, error }] = useDeleteBookMutation();
@@ -46,5 +46,3 @@ const BookPage = () => {
     </BookInfoContainer>
   );
 };
-
-export default BookPage;

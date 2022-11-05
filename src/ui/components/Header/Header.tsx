@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSignOutMutation } from 'services/auth/authAPI';
-import { HOME, LOGIN } from 'utils/constants/RoutesPathConstants';
-import ModalWindow from 'ui/components/ModalWindow/ModalWindow';
+import { useSignOutMutation } from 'services/auth/auth-API';
+import { HOME, LOGIN } from 'utils/constants/routes-path-constants';
+import { ModalWindow } from 'ui/components/ModalWindow/ModalWindow';
 import { useAppSelector } from 'services/hooks/hooks';
 import {
   HeaderTitle,
@@ -17,11 +17,11 @@ import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useSearchFilterHook } from 'utils/hooks/use-search-filter.hook';
 import { useNavigate } from 'react-router-dom';
 import { StyledInput } from 'ui/common-styles/common.styles';
-import logo from 'utils/assets/logo.png';
-import outIcon from 'utils/assets/icons/out.svg';
-import filter from 'utils/assets/icons/filter.svg';
+import logo from 'assets/logo.png';
+import outIcon from 'assets/icons/out.svg';
+import filter from 'assets/icons/filter.svg';
 
-const Header = () => {
+export const Header = () => {
   const navigate = useNavigate();
   const userName = useAppSelector((state) => state.user);
   const isAuthorised = useAppSelector((state) => state.user.isAuthorised);
@@ -77,5 +77,3 @@ const Header = () => {
     </StyledHeader>
   );
 };
-
-export default Header;

@@ -1,9 +1,9 @@
-import { ChangeEventHandler, FC, useRef, useState } from 'react';
+import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
 import { Button, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { posterTypes } from 'utils/constants/fileTypes';
-import { StyledError } from 'ui/common-styles/common.styles';
-import { FILE_SIZE } from 'utils/constants/errorConatants';
+import { posterTypes } from 'utils/constants/file-types';
+import { FILE_SIZE, REQUIRED_POSTER, WRONG_POSTER_FORMAT } from 'utils/constants/error-conatants';
+import { ErrorSpan } from 'ui/components/ErrorSpan/ErrorSpan';
 
 type UploadPosterPropsType = {
   setPosterFile: (posterFile: File) => void;
@@ -28,7 +28,7 @@ const UploadPoster: FC<UploadPosterPropsType> = ({ setPosterFile, setPosterError
         return;
       }
       if (!Object.values(posterTypes).includes(poster.type)) {
-        notification.error({ message: 'Wrong poster format' });
+        notification.error({ message: `${WRONG_POSTER_FORMAT}` });
         return;
       }
       convertToBase64(poster, (file64: string) => {
@@ -60,7 +60,7 @@ const UploadPoster: FC<UploadPosterPropsType> = ({ setPosterFile, setPosterError
         accept={`${posterTypes.jpeg}, ${posterTypes.jpg}, ${posterTypes.png}`}
       />
       {newImage && <img src={newImage} alt="poster image" />}
-      {isPropsError && <StyledError>Poster is required!</StyledError>}
+      {isPropsError && <ErrorSpan error={REQUIRED_POSTER} />}
     </div>
   );
 };

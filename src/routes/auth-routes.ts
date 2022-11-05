@@ -1,6 +1,6 @@
-import { FORGOT_PASSWORD, LOGIN, REGISTRATION } from 'utils/constants/RoutesPathConstants';
+import { FORGOT_PASSWORD, LOGIN, REGISTRATION } from 'utils/constants/routes-path-constants';
 import Login from 'ui/Pages/Login/Login';
-import Registration from 'ui/Pages/Registration/Registration';
+import { Registration } from 'ui/Pages/Registration/Registration';
 import ForgotPassword from 'ui/Pages/ForgotPassword/ForgotPassword';
 import { RouteType } from 'routes/route-types';
 

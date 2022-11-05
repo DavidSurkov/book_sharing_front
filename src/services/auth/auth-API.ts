@@ -1,4 +1,4 @@
-import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from 'utils/constants/endpointConstants';
+import { AUTH, CHECK, LOGIN, LOGOUT, REGISTER } from 'utils/constants/endpoint-constants';
 import { signInUser, signOutUser } from 'store/user-slice';
 import { apiSlice } from 'services/api/api-slice';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';

@@ -1,6 +1,6 @@
-import { ALL, BOOK, GENRE, SEARCH } from 'utils/constants/endpointConstants';
-import { BOOK_TAG } from 'services/constants/tag-constants';
-import { IUser } from 'services/auth/authAPI';
+import { ALL, BOOK, GENRE, SEARCH } from 'utils/constants/endpoint-constants';
+import { BOOK_TAG } from 'utils/constants/tag-constants';
+import { IUser } from 'services/auth/auth-API';
 import { apiSlice } from 'services/api/api-slice';
 
 export interface IGenre {

@@ -6,9 +6,9 @@ import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useQueryString } from 'utils/hooks/use-query-string.hook';
 import { StyledContainer } from 'ui/common-styles/common.styles';
 import { Container } from 'ui/Pages/Home/Home.styles';
-import { BOOK } from 'utils/constants/RoutesPathConstants';
+import { BOOK } from 'utils/constants/routes-path-constants';
 
-const Home = () => {
+export const Home = () => {
   const { data, refetch } = useQueryString();
   const { drawer, toggleDrawer } = useToggleDrawer();
   const navigate = useNavigate();
@@ -29,12 +29,10 @@ const Home = () => {
         />
         {data?.length
           ? data.map((book) => {
-              return <BookItem onClick={onClickHandler} {...book} key={book.poster.url} posterUrl={book.poster.url} />;
+              return <BookItem onClick={onClickHandler} {...book} key={book.poster.id} posterUrl={book.poster.url} />;
             })
           : ''}
       </Container>
     </StyledContainer>
   );
 };
-
-export default Home;

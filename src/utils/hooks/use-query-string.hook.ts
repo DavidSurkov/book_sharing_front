@@ -1,4 +1,4 @@
-import { useGetAllBooksQuery } from 'services/book/bookAPI';
+import { useGetAllBooksQuery } from 'services/book/book-API';
 import { useAppSelector } from 'services/hooks/hooks';
 import { useDebounce } from 'utils/hooks/use-debounce.hook';
 

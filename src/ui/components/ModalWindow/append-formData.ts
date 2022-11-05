@@ -1,5 +1,5 @@
 import { AddBookFormType } from 'ui/components/ModalWindow/ModalWindow';
-import { IGenre } from 'services/book/bookAPI';
+import { IGenre } from 'services/book/book-API';
 
 export const appendFormData = (data: AddBookFormType, genres?: IGenre[]) => {
   const formData = new FormData();

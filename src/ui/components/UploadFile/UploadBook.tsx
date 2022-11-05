@@ -1,9 +1,9 @@
-import { ChangeEventHandler, FC, useRef, useState } from 'react';
+import React, { ChangeEventHandler, FC, useRef, useState } from 'react';
 import { Button, notification } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import { bookTypes } from 'utils/constants/fileTypes';
-import { StyledError } from 'ui/common-styles/common.styles';
-import { FILE_SIZE } from 'utils/constants/errorConatants';
+import { bookTypes } from 'utils/constants/file-types';
+import { FILE_SIZE, REQUIRED_BOOK, WRONG_BOOK_FORMAT } from 'utils/constants/error-conatants';
+import { ErrorSpan } from 'ui/components/ErrorSpan/ErrorSpan';
 
 type UploadBookPropsType = {
   setBookFile: (bookFile: File) => void;
@@ -31,7 +31,7 @@ const UploadBook: FC<UploadBookPropsType> = ({ setBookFile, setBookError, isProp
         return;
       }
       if (!Object.values(bookTypes).includes(book.type)) {
-        notification.error({ message: 'Wrong book format' });
+        notification.error({ message: `${WRONG_BOOK_FORMAT}` });
         return;
       }
       setBookFile(book);
@@ -51,7 +51,7 @@ const UploadBook: FC<UploadBookPropsType> = ({ setBookFile, setBookError, isProp
         accept={`${bookTypes.fb2}, ${bookTypes.epub}, ${bookTypes.txt}, ${bookTypes.pdf}, ${bookTypes.word}`}
       />
       {newBook && <p>{newBook.name}</p>}
-      {isPropsError && <StyledError>Book is required!</StyledError>}
+      {isPropsError && <ErrorSpan error={REQUIRED_BOOK} />}
     </div>
   );
 };

@@ -10,8 +10,8 @@ import {
   SubmitButton,
 } from 'ui/components/SearchDrawer/SearchDrawer.styles';
 import { useSearchFilterHook } from 'utils/hooks/use-search-filter.hook';
-import { useAllGenreQuery } from 'services/book/bookAPI';
-import { SKIN_COLOR } from 'utils/constants/colorConstants';
+import { useAllGenreQuery } from 'services/book/book-API';
+import { SKIN_COLOR } from 'utils/constants/color-constants';
 
 interface ISearchDrawer {
   isOpen: boolean;

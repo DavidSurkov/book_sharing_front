@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DARK_BLUE } from 'utils/constants/colorConstants';
+import { DARK_BLUE } from 'utils/constants/color-constants';
 
 export const StyledErrorWrapper = styled.div`
   display: flex;

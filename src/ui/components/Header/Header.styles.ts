@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { DARK_BLUE } from 'utils/constants/colorConstants';
+import { DARK_BLUE, WHITE } from 'utils/constants/color-constants';
+import { FONT_BOLD, FONT_SIZE_15 } from 'utils/constants/font-constants';
+import { BORDER_RADIUS_24PX } from 'utils/constants/css-constants';
 
 export const StyledHeader = styled.header`
   display: flex;
@@ -19,7 +21,7 @@ export const LogoWrapper = styled.div`
 `;
 
 export const HeaderTitle = styled.h2`
-  font-weight: var(--FONT_BOLD);
+  font-weight: ${FONT_BOLD};
   color: ${DARK_BLUE};
   margin-left: 5px;
   cursor: pointer;
@@ -33,6 +35,7 @@ export const StyledLogoImage = styled.img`
 export const StyledIcon = styled.img`
   width: 25px;
   margin: 0 10px;
+  cursor: pointer;
   filter: brightness(0) saturate(100%) invert(11%) sepia(29%) saturate(3540%) hue-rotate(228deg) brightness(94%)
     contrast(97%);
 
@@ -50,12 +53,14 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 7px;
-  color: ${DARK_BLUE};
-  font-weight: var(--FONT_BOLD);
-  border-radius: 25px;
+  color: ${WHITE};
+  font-weight: ${FONT_BOLD};
+  background-color: ${DARK_BLUE};
+  border-radius: ${BORDER_RADIUS_24PX};
+  cursor: default;
 `;
 
 export const StyledParagraph = styled.span`
-  font-size: var(--FONT_SIZE_18);
+  font-size: ${FONT_SIZE_15};
   line-height: normal;
 `;

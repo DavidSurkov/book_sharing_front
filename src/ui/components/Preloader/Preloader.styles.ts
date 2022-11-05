@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import { DARK_BLUE } from 'utils/constants/colorConstants';
+import { DARK_BLUE } from 'utils/constants/color-constants';
+import { FONT_SIZE_12 } from 'utils/constants/font-constants';
 
 interface IStyledPreloader {
   isAbsolute: string | null;
@@ -19,8 +20,7 @@ export const StyledTitle = styled.div`
   color: ${DARK_BLUE};
   margin-left: 5px;
   text-transform: uppercase;
-  font-family: var(--JOSEFIN_SANS);
-  font-size: var(--FONT_SIZE_12);
+  font-size: ${FONT_SIZE_12};
   letter-spacing: 1px;
 `;
 
