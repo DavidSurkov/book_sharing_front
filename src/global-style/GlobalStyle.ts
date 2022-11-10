@@ -28,19 +28,17 @@ const fontFaces = css`
 
 export const GlobalStyle = createGlobalStyle`
   ${fontFaces}
-
   body {
     margin: 0;
-    background: linear-gradient(0deg, rgba(35, 29, 79, 0.455641631652661) 0%, rgba(232, 214, 214, 0.9094231442577031) 26%, 
-    rgba(233, 217, 217, 1) 62%, rgba(245, 245, 250, 1) 84%);
+    background: linear-gradient(0deg, rgba(35, 29, 79, 0.85) 0%, rgba(232, 214, 214, 0.6965379901960784) 35%, rgba(233, 217, 217, 1) 62%, rgba(245, 245, 250, 1) 84%);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
-  
+
+
   * {
     text-decoration: none;
     list-style: none;
@@ -64,7 +62,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-  
+
   ${antdCss}
-  
+
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DARK_BLUE, WHITE } from 'utils/constants/color-constants';
+import { DARK_BLUE } from 'utils/constants/color-constants';
 import { FONT_BOLD, FONT_SIZE_15 } from 'utils/constants/font-constants';
 import { BORDER_RADIUS_24PX } from 'utils/constants/css-constants';
 
@@ -16,7 +16,8 @@ export const StyledHeader = styled.header`
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 74%;
+  position: absolute;
+  left: 25px;
   height: 34px;
 `;
 
@@ -53,10 +54,10 @@ export const UserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 7px;
-  color: ${WHITE};
+  color: ${DARK_BLUE};
   font-weight: ${FONT_BOLD};
-  background-color: ${DARK_BLUE};
   border-radius: ${BORDER_RADIUS_24PX};
+  border: 1px solid ${DARK_BLUE};
   cursor: default;
 `;
 

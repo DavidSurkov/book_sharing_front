@@ -17,8 +17,8 @@ import { useToggleDrawer } from 'utils/hooks/use-toggle-drawer.hook';
 import { useSearchFilterHook } from 'utils/hooks/use-search-filter.hook';
 import { useNavigate } from 'react-router-dom';
 import { StyledInput } from 'ui/common-styles/common.styles';
-import logo from 'assets/logo.png';
 import outIcon from 'assets/icons/out.svg';
+import logo from 'assets/images/logo.png';
 import filter from 'assets/icons/filter.svg';
 
 export const Header = () => {
@@ -71,7 +71,7 @@ export const Header = () => {
       <ModalWindow />
 
       <UserInfoWrapper>
-        <StyledParagraph>{userName.email}</StyledParagraph>
+        <StyledParagraph>{userName.name}</StyledParagraph>
       </UserInfoWrapper>
       <StyledIcon src={outIcon} alt="Log out icon" onClick={logOutHandler} />
     </StyledHeader>

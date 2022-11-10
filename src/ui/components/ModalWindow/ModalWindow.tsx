@@ -34,15 +34,15 @@ export type AddBookFormType = {
   genre: number[];
   year: Date;
   description: string;
-  book?: File | null;
-  poster?: File | null;
+  book: File | null;
+  poster: File | null;
 };
 
 export const ModalWindow: FC = () => {
   const navigate = useNavigate();
   const { modal, toggleModal } = useToggle();
-  const [bookFile, setBookFile] = useState<File | null>();
-  const [posterFile, setPosterFile] = useState<File | null>();
+  const [bookFile, setBookFile] = useState<File | null>(null);
+  const [posterFile, setPosterFile] = useState<File | null>(null);
   const [bookError, setBookError] = useState(false);
   const [posterError, setPosterError] = useState(false);
 

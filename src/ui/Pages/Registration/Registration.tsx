@@ -15,7 +15,7 @@ import {
   StyledSpan,
   StyledTitle,
 } from 'ui/common-styles/common.styles';
-import logo from 'assets/logo.png';
+import logo from 'assets/images/logo.png';
 import { useNotificationAndNavigate } from 'utils/hooks/use-notification-and-navigate.hook';
 import { DO_NOT_MATCH_PASSWORD, REQUIRED_NAME } from 'utils/constants/error-conatants';
 import { ControlledInput } from 'ui/components/ControlledInput/ControlledInput';

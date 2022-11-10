@@ -6,7 +6,7 @@ export const Block = styled.div`
   padding: 20px;
   background: ${DARK_BLUE};
   border-radius: 8px;
-  width: 242px;
+  min-width: 240px;
 `;
 
 export const PosterWrapper = styled.div`

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useSignInMutation } from 'services/auth/auth-API';
 import { Preloader } from 'ui/components/Preloader/Preloader';
 import { NewUserWrapper, StyledDiv, StyledLinksWrapper } from 'ui/Pages/Login/Login.styles';
-import logo from 'assets/logo.png';
+import logo from 'assets/images/logo.png';
 import {
   StyledContainer,
   StyledErrorSpanEmail,

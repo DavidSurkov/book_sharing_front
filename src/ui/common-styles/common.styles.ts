@@ -9,6 +9,7 @@ export const StyledContainer = styled.div`
   width: 100vw;
   height: calc(100vh - 60px);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
@@ -54,6 +55,7 @@ export const StyledInputPassword = styled(Input.Password)`
   width: 200px;
   transition: width 0.1s cubic-bezier(0.55, 0.085, 0.68, 0.53);
   border-radius: 50px;
+  margin-bottom: 8px;
   height: 32px;
   outline: none;
   padding: 0 10px 0 16px;
@@ -67,7 +69,7 @@ export const StyledInputPassword = styled(Input.Password)`
 
 export const StyledButton = styled(Button)`
   width: 200px;
-  margin: 8px 0 20px 0;
+  margin: 0 0 10px 0;
   background: ${DARK_BLUE};
   color: ${WHITE};
   font-weight: bold;
