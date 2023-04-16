@@ -1,3 +1,4 @@
+import 'antd/dist/antd.css';
 import { createGlobalStyle, css } from 'styled-components';
 import JosefinSans2 from 'assets/fonts/JosefinSans/Josefin_Sans.woff2';
 import JosefinSans from 'assets/fonts/JosefinSans/Josefin_Sans.woff';
@@ -5,10 +6,6 @@ import JosefinSansBold2 from 'assets/fonts/JosefinSans/JosefinSansBold/Josefin_S
 import JosefinSansBold from 'assets/fonts/JosefinSans/JosefinSansBold/Josefin_Sans_Bold.woff';
 import JosefinSansRegular2 from 'assets/fonts/JosefinSans/JosefinSansRegular/Josefin_Sans_Regular.woff2';
 import JosefinSansRegular from 'assets/fonts/JosefinSans/JosefinSansRegular/Josefin_Sans_Regular.woff';
-
-const antdCss = css`
-  ${require('antd/dist/antd.css')}
-`;
 
 const fontFaces = css`
   @font-face {
@@ -63,6 +60,5 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  ${antdCss}
-
 `;
+/*${antdCss}*/
